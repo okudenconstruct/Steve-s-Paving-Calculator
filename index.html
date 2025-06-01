@@ -62,6 +62,7 @@
             font-size: 1.25rem;
             font-weight: 700;
             margin: 0.5rem 0 1.5rem 0;
+            text-decoration: underline;
         }
         
         .grid {
@@ -87,6 +88,7 @@
             font-weight: 700;
             margin-bottom: 0.5rem;
             font-size: 1rem;
+            text-decoration: underline;
         }
         
         .text-red { color: #f87171; }
@@ -127,13 +129,41 @@
             background-color: #1f2937;
             border-radius: 0.25rem;
             padding: 1rem;
-            margin-top: 1.5rem;
             font-size: 0.875rem;
         }
         
         .reference h3 {
             text-decoration: underline;
             margin-bottom: 0.5rem;
+        }
+        
+        .reference h4 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .reference table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        
+        .reference table tr {
+            border-bottom: 1px solid #4b5563;
+        }
+        
+        .reference table tr:first-child {
+            border-bottom: 1px solid #374151;
+        }
+        
+        .reference table td {
+            padding: 0.25rem;
+            vertical-align: top;
+        }
+        
+        .reference table tr:first-child td {
+            font-weight: 600;
         }
         
         .reference ul {
@@ -153,12 +183,12 @@
             <button class="btn btn-danger" onclick="resetForm()">Reset Form</button>
         </div>
 
-        <div class="title underline">Steve's Paving Calculator</div>
+        <div class="title">Steve's Paving Calculator</div>
 
         <div class="grid">
             <!-- Excavation Input -->
             <div class="input-section">
-                <h3 class="section-title text-red underline">Excavation Input</h3>
+                <h3 class="section-title text-red">Excavation Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="excavationArea" value="0">
                 <label>Depth (in)</label>
@@ -181,7 +211,7 @@
 
             <!-- DGA Input -->
             <div class="input-section">
-                <h3 class="section-title text-yellow underline">DGA Input</h3>
+                <h3 class="section-title text-yellow">DGA Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="dgaArea" value="0">
                 <label>Depth (in)</label>
@@ -204,7 +234,7 @@
 
             <!-- Milling Input -->
             <div class="input-section">
-                <h3 class="section-title text-pink underline">Milling Input</h3>
+                <h3 class="section-title text-pink">Milling Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="millingArea" value="0">
                 <label>Depth (in)</label>
@@ -234,7 +264,7 @@
 
             <!-- Base Input -->
             <div class="input-section">
-                <h3 class="section-title text-blue underline">19mm64 Base Input</h3>
+                <h3 class="section-title text-blue">19mm64 Base Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="baseArea" value="0">
                 <label>Depth (in)</label>
@@ -264,7 +294,7 @@
 
             <!-- Surface Input -->
             <div class="input-section">
-                <h3 class="section-title text-green underline">9.5mm64 Surface Input</h3>
+                <h3 class="section-title text-green">9.5mm64 Surface Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="surfaceArea" value="0">
                 <label>Depth (in)</label>
@@ -295,7 +325,7 @@
 
         <div class="grid">
             <!-- Excavation Output -->
-            <div class="output-section">
+            <div>
                 <h3 class="section-title text-red">Excavation Output</h3>
                 <p>Volume: <span id="excavationVolume">0</span></p>
                 <p>Days: <span id="excavationDays">0</span></p>
@@ -304,7 +334,7 @@
             </div>
 
             <!-- DGA Output -->
-            <div class="output-section">
+            <div>
                 <h3 class="section-title text-yellow">DGA Output</h3>
                 <p>Volume: <span id="dgaVolume">0</span></p>
                 <p>Tons: <span id="dgaTons">0</span></p>
@@ -314,7 +344,7 @@
             </div>
 
             <!-- Milling Output -->
-            <div class="output-section">
+            <div>
                 <h3 class="section-title text-pink">Milling Output</h3>
                 <p>Tons: <span id="millingTons">0</span></p>
                 <p>Days: <span id="millingDays">0</span></p>
@@ -323,7 +353,7 @@
             </div>
 
             <!-- Base Output -->
-            <div class="output-section">
+            <div>
                 <h3 class="section-title text-blue">19mm64 Base Output</h3>
                 <p>Tons: <span id="baseTons">0</span></p>
                 <p>Days: <span id="baseDays">0</span></p>
@@ -332,7 +362,7 @@
             </div>
 
             <!-- Surface Output -->
-            <div class="output-section">
+            <div>
                 <h3 class="section-title text-green">9.5mm64 Surface Output</h3>
                 <p>Tons: <span id="surfaceTons">0</span></p>
                 <p>Days: <span id="surfaceDays">0</span></p>
@@ -341,36 +371,156 @@
             </div>
         </div>
 
-        <div class="reference">
-            <h3>Reference Calculations</h3>
-            <ul>
-                <li><strong>Volume Calculations:</strong></li>
-                <li>&nbsp;&nbsp;• Excavation Volume (CY): (Area in SY × Depth in inches) ÷ 324</li>
-                <li>&nbsp;&nbsp;• DGA Volume (CY): (Area in SY × Depth in inches) ÷ 324</li>
-                <li><strong>Tonnage Calculations:</strong></li>
-                <li>&nbsp;&nbsp;• DGA Tons: Volume in CY × 1.9</li>
-                <li>&nbsp;&nbsp;• Milling Tons: Area in SY × Depth in inches × 0.0575</li>
-                <li>&nbsp;&nbsp;• Base Course Tons: Area in SY × Depth in inches × 0.0575</li>
-                <li>&nbsp;&nbsp;• Surface Course Tons: Area in SY × Depth in inches × 0.0575</li>
-                <li><strong>Days Calculations:</strong></li>
-                <li>&nbsp;&nbsp;• Excavation Days: Volume in CY ÷ Daily Rate in CY/day, rounded up to nearest 0.5</li>
-                <li>&nbsp;&nbsp;• DGA Days: Volume in CY ÷ Daily Rate in CY/day, rounded up to nearest 0.5</li>
-                <li>&nbsp;&nbsp;• Milling Days: Area in SY ÷ Daily Rate in SY/day, rounded up to nearest 0.5</li>
-                <li>&nbsp;&nbsp;• Paving Days: Area in SY ÷ Daily Rate in SY/day, rounded up to nearest 0.5</li>
-                <li><strong>Truck Fleet Calculations:</strong></li>
-                <li>&nbsp;&nbsp;• Daily Loads = Daily Volume ÷ 16 CY/truck (excavation/DGA) OR Daily Tons ÷ 22 tons/truck (asphalt)</li>
-                <li>&nbsp;&nbsp;• Trucks per Day = (Daily Loads × Travel Time in minutes) ÷ 480 minutes/day</li>
-                <li>&nbsp;&nbsp;• Total Truck Hours = Trucks per Day × Total Days × 8 hours/day</li>
-                <li><strong>Truck Capacities:</strong></li>
-                <li>&nbsp;&nbsp;• Asphalt Materials: 22 tons per truck (milling, base, surface)</li>
-                <li>&nbsp;&nbsp;• Volume Materials: 16 CY per truck (excavation, DGA)</li>
-                <li><strong>Travel Time Logic:</strong></li>
-                <li>&nbsp;&nbsp;• Includes 40 minutes total for loading (20 min) and unloading (20 min)</li>
-                <li>&nbsp;&nbsp;• Longer travel times require more trucks to maintain continuous production</li>
-                <li>&nbsp;&nbsp;• 480 minutes = 8-hour workday for continuous operation</li>
-                <li><strong>Conversion Factor:</strong></li>
-                <li>&nbsp;&nbsp;• 324 = 9 sq ft/SY × 36 inches/yard (standard SY to CY conversion)</li>
-            </ul>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;">
+            <div class="reference">
+                <h3>Reference Calculations</h3>
+                
+                <h4>Volume & Tonnage Calculations:</h4>
+                <table>
+                    <tr>
+                        <td>Material</td>
+                        <td>Formula</td>
+                        <td>Notes</td>
+                    </tr>
+                    <tr>
+                        <td>Excavation Volume</td>
+                        <td>(Area in SY × Depth in inches) ÷ 324</td>
+                        <td>324 = conversion factor</td>
+                    </tr>
+                    <tr>
+                        <td>DGA Volume</td>
+                        <td>(Area in SY × Depth in inches) ÷ 324</td>
+                        <td>Same as excavation</td>
+                    </tr>
+                    <tr>
+                        <td>DGA Tons</td>
+                        <td>Volume in CY × 1.9</td>
+                        <td>1.9 tons/CY density</td>
+                    </tr>
+                    <tr>
+                        <td>Asphalt Tons</td>
+                        <td>Area in SY × Depth in inches × 0.0575</td>
+                        <td>All asphalt materials</td>
+                    </tr>
+                </table>
+
+                <h4>Time Calculations:</h4>
+                <table>
+                    <tr>
+                        <td>Activity</td>
+                        <td>Days Formula</td>
+                        <td>Rounding</td>
+                    </tr>
+                    <tr>
+                        <td>All Activities</td>
+                        <td>Volume or Area ÷ Daily Rate</td>
+                        <td>Round up to nearest 0.5 day</td>
+                    </tr>
+                </table>
+
+                <h4>Truck Fleet Calculations:</h4>
+                <table>
+                    <tr>
+                        <td>Step</td>
+                        <td>Formula</td>
+                        <td>Notes</td>
+                    </tr>
+                    <tr>
+                        <td>Daily Loads</td>
+                        <td>Daily Volume ÷ 16 CY/truck (dirt/DGA)</td>
+                        <td>16 CY capacity for volume materials</td>
+                    </tr>
+                    <tr>
+                        <td>Daily Loads</td>
+                        <td>Daily Tons ÷ 22 tons/truck (asphalt)</td>
+                        <td>22 ton capacity for asphalt</td>
+                    </tr>
+                    <tr>
+                        <td>Trucks per Day</td>
+                        <td>(Daily Loads × Travel Time) ÷ 480 minutes</td>
+                        <td>480 = 8-hour workday</td>
+                    </tr>
+                    <tr>
+                        <td>Total Truck Hours</td>
+                        <td>Trucks per Day × Total Days × 8 hours</td>
+                        <td>Fleet utilization time</td>
+                    </tr>
+                </table>
+
+                <h4>Key Factors:</h4>
+                <ul>
+                    <li>Travel Time: Includes 40 minutes total for loading (20 min) + unloading (20 min)</li>
+                    <li>324 Factor: 9 sq ft/SY × 36 inches/yard = standard conversion</li>
+                    <li>Continuous Operation: Longer travel times require more trucks to maintain production</li>
+                </ul>
+            </div>
+
+            <div class="reference">
+                <h3>Production Rate Guidance</h3>
+                
+                <p style="margin-bottom: 1rem; line-height: 1.4;">
+                    The rates below are derived from roadway construction data and modified for parking lot conditions. 
+                    Parking lots typically require 25-45% more time due to obstacles (light poles, curbs, islands), 
+                    frequent equipment repositioning, increased edge work, and manual finishing requirements. 
+                    Use these ranges as starting points and adjust based on project complexity and site conditions.
+                </p>
+
+                <h4>Recommended Production Rates:</h4>
+                <table>
+                    <tr>
+                        <td>Activity</td>
+                        <td>Roadway Rate</td>
+                        <td>Parking Lot Range</td>
+                        <td>Modifier</td>
+                    </tr>
+                    <tr>
+                        <td>Excavation</td>
+                        <td>400-800 CY/day</td>
+                        <td>300-650 CY/day</td>
+                        <td>0.75-0.85×</td>
+                    </tr>
+                    <tr>
+                        <td>DGA Placement</td>
+                        <td>350-700 CY/day</td>
+                        <td>250-550 CY/day</td>
+                        <td>0.70-0.80×</td>
+                    </tr>
+                    <tr>
+                        <td>Milling</td>
+                        <td>4000-8000 SY/day</td>
+                        <td>2500-6000 SY/day</td>
+                        <td>0.60-0.75×</td>
+                    </tr>
+                    <tr>
+                        <td>Base Course</td>
+                        <td>3000-7000 SY/day</td>
+                        <td>1800-4500 SY/day</td>
+                        <td>0.55-0.70×</td>
+                    </tr>
+                    <tr>
+                        <td>Surface Course</td>
+                        <td>3500-8000 SY/day</td>
+                        <td>2000-5000 SY/day</td>
+                        <td>0.50-0.65×</td>
+                    </tr>
+                </table>
+
+                <h4>Complexity Classifications:</h4>
+                <ul>
+                    <li><strong>Simple Lots</strong> (0.80-0.85×): Large retail, minimal obstacles, good access</li>
+                    <li><strong>Standard Lots</strong> (0.65-0.75×): Typical commercial, moderate obstacles</li>
+                    <li><strong>Complex Lots</strong> (0.50-0.60×): Dense obstacles, tight spaces, extensive hand work</li>
+                </ul>
+
+                <h4>Key Reduction Factors:</h4>
+                <ul>
+                    <li>Smaller equipment access, utility conflicts</li>
+                    <li>Hand grading around obstacles, edge work</li>
+                    <li>Frequent stops, tight turns, extensive edge cuts</li>
+                    <li>Obstacle navigation, compaction challenges</li>
+                    <li>Quality requirements, hand finishing, joint work</li>
+                </ul>
+            </div>
         </div>
     </div>
 
