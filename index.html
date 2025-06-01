@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Steve's Paving Calculator</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { background: #111; color: white; font-family: sans-serif; padding: 20px; }
+    input, select { margin-bottom: 10px; padding: 5px; width: 100%; border-radius: 5px; }
+    button { margin: 5px; padding: 10px 20px; border-radius: 5px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function ProductivityEstimator() {
+      const [millingArea, setMillingArea] = useState(0);
+      const [millingDepth, setMillingDepth] = useState(0);
+      const [millingTravelTime, setMillingTravelTime] = useState(0);
+      const [selectedMillingRate, setSelectedMillingRate] = useState(0);
+      const [dgaArea, setDgaArea] = useState(0);
+      const [dgaDepth, setDgaDepth] = useState(0);
+      const [dgaTravelTime, setDgaTravelTime] = useState(0);
+      const [selectedDgaRate, setSelectedDgaRate] = useState(0);
+      const [excavationArea, setExcavationArea] = useState(0);
+      const [excavationDepth, setExcavationDepth] = useState(0);
+      const [excavationTravelTime, setExcavationTravelTime] = useState(0);
+      const [selectedExcavationRate, setSelectedExcavationRate] = useState(0);
+      const [baseArea, setBaseArea] = useState(0);
+      const [baseDepth, setBaseDepth] = useState(0);
+      const [baseTravelTime, setBaseTravelTime] = useState(0);
+      const [selectedBasePavingRate, setSelectedBasePavingRate] = useState(0);
+      const [surfaceArea, setSurfaceArea] = useState(0);
+      const [pavingDepth, setPavingDepth] = useState(0);
+      const [surfaceTravelTime, setSurfaceTravelTime] = useState(0);
+      const [selectedSurfacePavingRate, setSelectedSurfacePavingRate] = useState(0);
+      const [millingOutput, setMillingOutput] = useState({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+      const [dgaOutput, setDgaOutput] = useState({ volume: 0, tons: 0, days: 0, truckHours: 0, trucks: 0 });
+      const [excavationOutput, setExcavationOutput] = useState({ volume: 0, days: 0, truckHours: 0, trucks: 0 });
+      const [baseOutput, setBaseOutput] = useState({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+      const [surfaceOutput, setSurfaceOutput] = useState({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+
+      const millingRateOptions = Array.from({ length: 15 }, (_, i) => 1000 + i * 500);
+      const pavingRateOptions = Array.from({ length: 15 }, (_, i) => 1000 + i * 500);
+      const dgaRateOptions = [100, 200, 300, 400, 500, 600, 700, 800];
+      const excavationRateOptions = [100, 200, 300, 400, 500, 600, 700, 800];
+
+      function roundUp(val, increment) {
+        return Math.ceil(val / increment) * increment;
+      }
+
+      const calculateOutput = () => {
+        const excavationVolume = roundUp(excavationArea * excavationDepth / 324, 1);
+        const excavationDays = Math.ceil(((excavationVolume / selectedExcavationRate) * 2) * 2) / 2;
+        const excavationTruckHours = Math.round((excavationVolume / 20) * excavationTravelTime);
+        const excavationTrucks = Math.ceil(excavationTruckHours / 8);
+        setExcavationOutput({ volume: excavationVolume, days: excavationDays, truckHours: excavationTruckHours, trucks: excavationTrucks });
+
+        const dgaVolume = roundUp(dgaArea * dgaDepth / 324, 1);
+        const dgaTons = roundUp(dgaVolume * 1.9, 1);
+        const dgaDays = Math.ceil(((dgaVolume / selectedDgaRate) * 2) * 2) / 2;
+        const dgaTruckHours = Math.round((dgaTons / 24) * dgaTravelTime);
+        const dgaTrucks = Math.ceil(dgaTruckHours / 8);
+        setDgaOutput({ volume: dgaVolume, tons: dgaTons, days: dgaDays, truckHours: dgaTruckHours, trucks: dgaTrucks });
+
+        const millingTons = roundUp(millingArea * millingDepth * 0.0575, 1);
+        const millingDays = Math.ceil(((millingArea / selectedMillingRate) * 2) * 2) / 2;
+        const millingTruckHours = Math.round((millingTons / 20) * millingTravelTime);
+        const millingTrucks = Math.ceil(millingTruckHours / 8);
+        setMillingOutput({ tons: millingTons, days: millingDays, truckHours: millingTruckHours, trucks: millingTrucks });
+
+        const baseTons = roundUp(baseArea * baseDepth * 0.0575, 1);
+        const baseDays = Math.ceil(((baseArea / selectedBasePavingRate) * 2) * 2) / 2;
+        const baseTruckHours = Math.round((baseTons / 24) * baseTravelTime);
+        const baseTrucks = Math.ceil(baseTruckHours / 8);
+        setBaseOutput({ tons: baseTons, days: baseDays, truckHours: baseTruckHours, trucks: baseTrucks });
+
+        const surfaceTons = roundUp(surfaceArea * pavingDepth * 0.0575, 1);
+        const surfaceDays = Math.ceil(((surfaceArea / selectedSurfacePavingRate) * 2) * 2) / 2;
+        const surfaceTruckHours = Math.round((surfaceTons / 24) * surfaceTravelTime);
+        const surfaceTrucks = Math.ceil(surfaceTruckHours / 8);
+        setSurfaceOutput({ tons: surfaceTons, days: surfaceDays, truckHours: surfaceTruckHours, trucks: surfaceTrucks });
+      };
+
+      return (
+        <div>
+          <h1>Steve's Paving Calculator</h1>
+          <button onClick={calculateOutput}>Calculate</button>
+          <div className="grid">
+            <div>
+              <h3>Excavation Output</h3>
+              <p>Volume: {excavationOutput.volume}</p>
+              <p>Days: {excavationOutput.days}</p>
+              <p>Truck Hours: {excavationOutput.truckHours}</p>
+              <p>Trucks Required: {excavationOutput.trucks}</p>
+            </div>
+            <div>
+              <h3>DGA Output</h3>
+              <p>Volume: {dgaOutput.volume}</p>
+              <p>Tons: {dgaOutput.tons}</p>
+              <p>Days: {dgaOutput.days}</p>
+              <p>Truck Hours: {dgaOutput.truckHours}</p>
+              <p>Trucks Required: {dgaOutput.trucks}</p>
+            </div>
+            <div>
+              <h3>Milling Output</h3>
+              <p>Tons: {millingOutput.tons}</p>
+              <p>Days: {millingOutput.days}</p>
+              <p>Truck Hours: {millingOutput.truckHours}</p>
+              <p>Trucks Required: {millingOutput.trucks}</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<ProductivityEstimator />);
+  </script>
+</body>
+</html>
