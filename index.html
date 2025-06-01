@@ -403,7 +403,7 @@
 
             // Excavation calculations
             const excavationVolume = roundUp(excavationArea * excavationDepth / 324, 1);
-            const excavationDays = Math.ceil((excavationVolume / excavationRate) * 2) / 2;
+            const excavationDays = Math.ceil(excavationVolume / excavationRate * 2) / 2;
             const excavationDailyVolume = excavationVolume / excavationDays;
             const excavationLoadsPerDay = excavationDailyVolume / 16; // 16 CY per truck
             const excavationTrucks = Math.ceil((excavationLoadsPerDay * excavationTravelTime) / 480);
@@ -412,7 +412,7 @@
             // DGA calculations
             const dgaVolume = roundUp(dgaArea * dgaDepth / 324, 1);
             const dgaTons = roundUp(dgaVolume * 1.9, 1);
-            const dgaDays = Math.ceil((dgaVolume / dgaRate) * 2) / 2;
+            const dgaDays = Math.ceil(dgaVolume / dgaRate * 2) / 2;
             const dgaDailyVolume = dgaVolume / dgaDays;
             const dgaLoadsPerDay = dgaDailyVolume / 16; // 16 CY per truck
             const dgaTrucks = Math.ceil((dgaLoadsPerDay * dgaTravelTime) / 480);
