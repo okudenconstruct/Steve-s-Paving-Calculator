@@ -339,17 +339,26 @@
         <div class="reference">
             <h3>Reference Calculations</h3>
             <ul>
-                <li>Excavation Volume (CY): (Area × Depth) ÷ 324</li>
-                <li>DGA Volume (CY): (Area × Depth) ÷ 324</li>
-                <li>DGA Tons: Volume × 1.9</li>
-                <li>Milling Tons: Area × Depth × 0.0575</li>
-                <li>Base Tons: Area × Depth × 0.0575</li>
-                <li>Surface Tons: Area × Depth × 0.0575</li>
-                <li>Days: ((Area ÷ Daily Rate) × 2), rounded to nearest 0.5</li>
-                <li>Truck Hours (Excavation & DGA): (Volume ÷ Truck Capacity) × Travel Time</li>
-                <li>Truck Hours (Milling/Base/Surface): (Tons ÷ Truck Capacity) × Travel Time</li>
-                <li>Truck Capacity: 20 tons for Milling & Excavation, 24 tons for DGA/Base/Surface</li>
-                <li>Trucks Required: Truck Hours ÷ 8</li>
+                <li><strong>Volume Calculations:</strong></li>
+                <li>&nbsp;&nbsp;• Excavation Volume (CY): (Area in SY × Depth in inches) ÷ 324</li>
+                <li>&nbsp;&nbsp;• DGA Volume (CY): (Area in SY × Depth in inches) ÷ 324</li>
+                <li><strong>Tonnage Calculations:</strong></li>
+                <li>&nbsp;&nbsp;• DGA Tons: Volume in CY × 1.9</li>
+                <li>&nbsp;&nbsp;• Milling Tons: Area in SY × Depth in inches × 0.0575</li>
+                <li>&nbsp;&nbsp;• Base Course Tons: Area in SY × Depth in inches × 0.0575</li>
+                <li>&nbsp;&nbsp;• Surface Course Tons: Area in SY × Depth in inches × 0.0575</li>
+                <li><strong>Days Calculations:</strong></li>
+                <li>&nbsp;&nbsp;• Excavation Days: (Volume in CY ÷ Daily Rate in CY/day) × 2, rounded to nearest 0.5</li>
+                <li>&nbsp;&nbsp;• DGA Days: (Volume in CY ÷ Daily Rate in CY/day) × 2, rounded to nearest 0.5</li>
+                <li>&nbsp;&nbsp;• Milling Days: (Area in SY ÷ Daily Rate in SY/day) × 2, rounded to nearest 0.5</li>
+                <li>&nbsp;&nbsp;• Paving Days: (Area in SY ÷ Daily Rate in SY/day) × 2, rounded to nearest 0.5</li>
+                <li><strong>Truck Calculations:</strong></li>
+                <li>&nbsp;&nbsp;• Truck Hours = (Number of Loads × Travel Time in minutes) ÷ 60</li>
+                <li>&nbsp;&nbsp;• Number of Loads: Volume ÷ 20 CY/truck (excavation) OR Tons ÷ truck capacity</li>
+                <li>&nbsp;&nbsp;• Truck Capacities: 20 tons (milling & excavation), 24 tons (DGA/base/surface)</li>
+                <li>&nbsp;&nbsp;• Trucks Required: Truck Hours ÷ 8 hours/day, rounded up</li>
+                <li><strong>Conversion Factor:</strong></li>
+                <li>&nbsp;&nbsp;• 324 = 9 sq ft/SY × 36 inches/yard (standard SY to CY conversion)</li>
             </ul>
         </div>
     </div>
@@ -389,32 +398,32 @@
             // Excavation calculations
             const excavationVolume = roundUp(excavationArea * excavationDepth / 324, 1);
             const excavationDays = Math.ceil((excavationVolume / excavationRate) * 2) / 2;
-            const excavationTruckHours = Math.round((excavationVolume / 20) * excavationTravelTime);
+            const excavationTruckHours = Math.round(((excavationVolume / 20) * excavationTravelTime) / 60);
             const excavationTrucks = Math.ceil(excavationTruckHours / 8);
 
             // DGA calculations
             const dgaVolume = roundUp(dgaArea * dgaDepth / 324, 1);
             const dgaTons = roundUp(dgaVolume * 1.9, 1);
             const dgaDays = Math.ceil((dgaVolume / dgaRate) * 2) / 2;
-            const dgaTruckHours = Math.round((dgaTons / 24) * dgaTravelTime);
+            const dgaTruckHours = Math.round(((dgaTons / 24) * dgaTravelTime) / 60);
             const dgaTrucks = Math.ceil(dgaTruckHours / 8);
 
             // Milling calculations
             const millingTons = roundUp(millingArea * millingDepth * 0.0575, 1);
             const millingDays = Math.ceil((millingArea / millingRate) * 2) / 2;
-            const millingTruckHours = Math.round((millingTons / 20) * millingTravelTime);
+            const millingTruckHours = Math.round(((millingTons / 20) * millingTravelTime) / 60);
             const millingTrucks = Math.ceil(millingTruckHours / 8);
 
             // Base calculations
             const baseTons = roundUp(baseArea * baseDepth * 0.0575, 1);
             const baseDays = Math.ceil((baseArea / baseRate) * 2) / 2;
-            const baseTruckHours = Math.round((baseTons / 24) * baseTravelTime);
+            const baseTruckHours = Math.round(((baseTons / 24) * baseTravelTime) / 60);
             const baseTrucks = Math.ceil(baseTruckHours / 8);
 
             // Surface calculations
             const surfaceTons = roundUp(surfaceArea * surfaceDepth * 0.0575, 1);
             const surfaceDays = Math.ceil((surfaceArea / surfaceRate) * 2) / 2;
-            const surfaceTruckHours = Math.round((surfaceTons / 24) * surfaceTravelTime);
+            const surfaceTruckHours = Math.round(((surfaceTons / 24) * surfaceTravelTime) / 60);
             const surfaceTrucks = Math.ceil(surfaceTruckHours / 8);
 
             // Update output displays
