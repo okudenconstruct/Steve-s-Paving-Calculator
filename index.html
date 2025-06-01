@@ -190,11 +190,11 @@
             <div class="input-section">
                 <h3 class="section-title text-red">Excavation Input</h3>
                 <label>Area (SY)</label>
-                <input type="number" id="excavationArea" value="0">
+                <input type="number" id="excavationArea" placeholder="Enter area in SY">
                 <label>Depth (in)</label>
-                <input type="number" id="excavationDepth" value="0">
+                <input type="number" id="excavationDepth" placeholder="Enter depth in inches">
                 <label>Travel Time (min)</label>
-                <input type="number" id="excavationTravelTime" value="0">
+                <input type="number" id="excavationTravelTime" placeholder="Enter travel time">
                 <label>CY/day</label>
                 <select id="excavationRate">
                     <option value="0">--Select Excavation Rate--</option>
@@ -213,11 +213,11 @@
             <div class="input-section">
                 <h3 class="section-title text-yellow">DGA Input</h3>
                 <label>Area (SY)</label>
-                <input type="number" id="dgaArea" value="0">
+                <input type="number" id="dgaArea" placeholder="Enter area in SY">
                 <label>Depth (in)</label>
-                <input type="number" id="dgaDepth" value="0">
+                <input type="number" id="dgaDepth" placeholder="Enter depth in inches">
                 <label>Travel Time (min)</label>
-                <input type="number" id="dgaTravelTime" value="0">
+                <input type="number" id="dgaTravelTime" placeholder="Enter travel time">
                 <label>CY/day</label>
                 <select id="dgaRate">
                     <option value="0">--Select DGA Rate--</option>
@@ -236,11 +236,11 @@
             <div class="input-section">
                 <h3 class="section-title text-pink">Milling Input</h3>
                 <label>Area (SY)</label>
-                <input type="number" id="millingArea" value="0">
+                <input type="number" id="millingArea" placeholder="Enter area in SY">
                 <label>Depth (in)</label>
-                <input type="number" id="millingDepth" value="0">
+                <input type="number" id="millingDepth" placeholder="Enter depth in inches">
                 <label>Travel Time (min)</label>
-                <input type="number" id="millingTravelTime" value="0">
+                <input type="number" id="millingTravelTime" placeholder="Enter travel time">
                 <label>SY/day</label>
                 <select id="millingRate">
                     <option value="0">--Select Milling Rate--</option>
@@ -266,11 +266,11 @@
             <div class="input-section">
                 <h3 class="section-title text-blue">19mm64 Base Input</h3>
                 <label>Area (SY)</label>
-                <input type="number" id="baseArea" value="0">
+                <input type="number" id="baseArea" placeholder="Enter area in SY">
                 <label>Depth (in)</label>
-                <input type="number" id="baseDepth" value="0">
+                <input type="number" id="baseDepth" placeholder="Enter depth in inches">
                 <label>Travel Time (min)</label>
-                <input type="number" id="baseTravelTime" value="0">
+                <input type="number" id="baseTravelTime" placeholder="Enter travel time">
                 <label>SY/day</label>
                 <select id="baseRate">
                     <option value="0">--Select Base Rate--</option>
@@ -296,11 +296,11 @@
             <div class="input-section">
                 <h3 class="section-title text-green">9.5mm64 Surface Input</h3>
                 <label>Area (SY)</label>
-                <input type="number" id="surfaceArea" value="0">
+                <input type="number" id="surfaceArea" placeholder="Enter area in SY">
                 <label>Depth (in)</label>
-                <input type="number" id="surfaceDepth" value="0">
+                <input type="number" id="surfaceDepth" placeholder="Enter depth in inches">
                 <label>Travel Time (min)</label>
-                <input type="number" id="surfaceTravelTime" value="0">
+                <input type="number" id="surfaceTravelTime" placeholder="Enter travel time">
                 <label>SY/day</label>
                 <select id="surfaceRate">
                     <option value="0">--Select Surface Rate--</option>
@@ -628,7 +628,7 @@
         function resetForm() {
             // Reset all input fields
             const inputs = document.querySelectorAll('input');
-            inputs.forEach(input => input.value = '0');
+            inputs.forEach(input => input.value = '');
 
             const selects = document.querySelectorAll('select');
             selects.forEach(select => select.value = '0');
