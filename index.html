@@ -153,18 +153,19 @@
             <button class="btn btn-danger" onclick="resetForm()">Reset Form</button>
         </div>
 
-        <div class="title">Steve's Paving Calculator</div>
+        <div class="title underline">Steve's Paving Calculator</div>
 
         <div class="grid">
             <!-- Excavation Input -->
             <div class="input-section">
-                <h3 class="section-title text-red">Excavation Input</h3>
+                <h3 class="section-title text-red underline">Excavation Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="excavationArea" value="0">
                 <label>Depth (in)</label>
                 <input type="number" id="excavationDepth" value="0">
                 <label>Travel Time (min)</label>
                 <input type="number" id="excavationTravelTime" value="0">
+                <label>CY/day</label>
                 <select id="excavationRate">
                     <option value="0">--Select Excavation Rate--</option>
                     <option value="100">100</option>
@@ -180,13 +181,14 @@
 
             <!-- DGA Input -->
             <div class="input-section">
-                <h3 class="section-title text-yellow">DGA Input</h3>
+                <h3 class="section-title text-yellow underline">DGA Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="dgaArea" value="0">
                 <label>Depth (in)</label>
                 <input type="number" id="dgaDepth" value="0">
                 <label>Travel Time (min)</label>
                 <input type="number" id="dgaTravelTime" value="0">
+                <label>CY/day</label>
                 <select id="dgaRate">
                     <option value="0">--Select DGA Rate--</option>
                     <option value="100">100</option>
@@ -202,13 +204,14 @@
 
             <!-- Milling Input -->
             <div class="input-section">
-                <h3 class="section-title text-pink">Milling Input</h3>
+                <h3 class="section-title text-pink underline">Milling Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="millingArea" value="0">
                 <label>Depth (in)</label>
                 <input type="number" id="millingDepth" value="0">
                 <label>Travel Time (min)</label>
                 <input type="number" id="millingTravelTime" value="0">
+                <label>SY/day</label>
                 <select id="millingRate">
                     <option value="0">--Select Milling Rate--</option>
                     <option value="1000">1000</option>
@@ -231,13 +234,14 @@
 
             <!-- Base Input -->
             <div class="input-section">
-                <h3 class="section-title text-blue">19mm64 Base Input</h3>
+                <h3 class="section-title text-blue underline">19mm64 Base Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="baseArea" value="0">
                 <label>Depth (in)</label>
                 <input type="number" id="baseDepth" value="0">
                 <label>Travel Time (min)</label>
                 <input type="number" id="baseTravelTime" value="0">
+                <label>SY/day</label>
                 <select id="baseRate">
                     <option value="0">--Select Base Rate--</option>
                     <option value="1000">1000</option>
@@ -260,13 +264,14 @@
 
             <!-- Surface Input -->
             <div class="input-section">
-                <h3 class="section-title text-green">9.5mm64 Surface Input</h3>
+                <h3 class="section-title text-green underline">9.5mm64 Surface Input</h3>
                 <label>Area (SY)</label>
                 <input type="number" id="surfaceArea" value="0">
                 <label>Depth (in)</label>
                 <input type="number" id="surfaceDepth" value="0">
                 <label>Travel Time (min)</label>
                 <input type="number" id="surfaceTravelTime" value="0">
+                <label>SY/day</label>
                 <select id="surfaceRate">
                     <option value="0">--Select Surface Rate--</option>
                     <option value="1000">1000</option>
