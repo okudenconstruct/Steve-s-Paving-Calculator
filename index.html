@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steve's Paving Calculator</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -16,484 +13,450 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #111827;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 1.5rem;
         }
         
-        .bg-gray-900 { background-color: #111827; }
-        .min-h-screen { min-height: 100vh; }
-        .text-white { color: #ffffff; }
-        .p-6 { padding: 1.5rem; }
-        
-        .flex { display: flex; }
-        .gap-4 { gap: 1rem; }
-        .mb-8 { margin-bottom: 2rem; }
-        .mb-6 { margin-bottom: 1.5rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
-        .mt-2 { margin-top: 0.5rem; }
-        .mt-6 { margin-top: 1.5rem; }
-        
-        .bg-blue-500 { background-color: #3b82f6; }
-        .bg-blue-600 { background-color: #2563eb; }
-        .bg-red-500 { background-color: #ef4444; }
-        .bg-red-600 { background-color: #dc2626; }
-        .bg-gray-800 { background-color: #1f2937; }
-        
-        .hover\:bg-blue-600:hover { background-color: #2563eb; }
-        .hover\:bg-red-600:hover { background-color: #dc2626; }
-        
-        .px-4 { padding-left: 1rem; padding-right: 1rem; }
-        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-        .p-2 { padding: 0.5rem; }
-        .p-4 { padding: 1rem; }
-        .pl-5 { padding-left: 1.25rem; }
-        
-        .rounded { border-radius: 0.25rem; }
-        
-        .text-center { text-align: center; }
-        .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
-        .font-bold { font-weight: 700; }
-        
-        .text-red-400 { color: #f87171; }
-        .text-yellow-400 { color: #facc15; }
-        .text-pink-400 { color: #f472b6; }
-        .text-blue-400 { color: #60a5fa; }
-        .text-green-400 { color: #4ade80; }
-        .text-black { color: #000000; }
-        
-        .grid { display: grid; }
-        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-        
-        @media (min-width: 768px) {
-            .md\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
-        .space-y-2 > * + * { margin-top: 0.5rem; }
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
         
-        .w-full { width: 100%; }
-        
-        button {
+        .btn {
+            padding: 0.5rem 1rem;
             border: none;
+            border-radius: 0.25rem;
             cursor: pointer;
+            font-weight: 500;
             transition: background-color 0.2s;
         }
         
-        input, select {
-            border: 1px solid #d1d5db;
-            outline: none;
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
         }
         
-        input:focus, select:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 1px #3b82f6;
+        .btn-primary:hover {
+            background-color: #2563eb;
         }
         
-        .underline { text-decoration: underline; }
-        
-        .list-disc { list-style-type: disc; }
-        
-        ul { 
-            list-style-position: inside;
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
         }
+        
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0.5rem 0 1.5rem 0;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .text-red { color: #f87171; }
+        .text-yellow { color: #facc15; }
+        .text-pink { color: #f472b6; }
+        .text-blue { color: #60a5fa; }
+        .text-green { color: #4ade80; }
         
         label {
             display: block;
             font-weight: 500;
             margin-bottom: 0.25rem;
+            font-size: 0.875rem;
         }
         
-        h3 {
-            font-size: 1rem;
-            font-weight: 700;
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            background-color: white;
+            color: black;
+            font-size: 0.875rem;
         }
         
-        p {
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 1px #3b82f6;
+        }
+        
+        .output-section p {
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+        }
+        
+        .reference {
+            background-color: #1f2937;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .reference h3 {
+            text-decoration: underline;
+            margin-bottom: 0.5rem;
+        }
+        
+        .reference ul {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+        }
+        
+        .reference li {
             margin-bottom: 0.25rem;
         }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div class="container">
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="calculateOutput()">Calculate</button>
+            <button class="btn btn-danger" onclick="resetForm()">Reset Form</button>
+        </div>
 
-    <script type="text/babel">
-        const { useState } = React;
+        <div class="title">Steve's Paving Calculator</div>
 
-        function ProductivityEstimator() {
-            const [millingArea, setMillingArea] = useState(0);
-            const [millingDepth, setMillingDepth] = useState(0);
-            const [millingTravelTime, setMillingTravelTime] = useState(0);
-            const [selectedMillingRate, setSelectedMillingRate] = useState(0);
+        <div class="grid">
+            <!-- Excavation Input -->
+            <div class="input-section">
+                <h3 class="section-title text-red">Excavation Input</h3>
+                <label>Area (SY)</label>
+                <input type="number" id="excavationArea" value="0">
+                <label>Depth (in)</label>
+                <input type="number" id="excavationDepth" value="0">
+                <label>Travel Time (min)</label>
+                <input type="number" id="excavationTravelTime" value="0">
+                <select id="excavationRate">
+                    <option value="0">--Select Excavation Rate--</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                    <option value="400">400</option>
+                    <option value="500">500</option>
+                    <option value="600">600</option>
+                    <option value="700">700</option>
+                    <option value="800">800</option>
+                </select>
+            </div>
 
-            const [dgaArea, setDgaArea] = useState(0);
-            const [dgaDepth, setDgaDepth] = useState(0);
-            const [dgaTravelTime, setDgaTravelTime] = useState(0);
-            const [selectedDgaRate, setSelectedDgaRate] = useState(0);
+            <!-- DGA Input -->
+            <div class="input-section">
+                <h3 class="section-title text-yellow">DGA Input</h3>
+                <label>Area (SY)</label>
+                <input type="number" id="dgaArea" value="0">
+                <label>Depth (in)</label>
+                <input type="number" id="dgaDepth" value="0">
+                <label>Travel Time (min)</label>
+                <input type="number" id="dgaTravelTime" value="0">
+                <select id="dgaRate">
+                    <option value="0">--Select DGA Rate--</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                    <option value="400">400</option>
+                    <option value="500">500</option>
+                    <option value="600">600</option>
+                    <option value="700">700</option>
+                    <option value="800">800</option>
+                </select>
+            </div>
 
-            const [excavationArea, setExcavationArea] = useState(0);
-            const [excavationDepth, setExcavationDepth] = useState(0);
-            const [excavationTravelTime, setExcavationTravelTime] = useState(0);
-            const [selectedExcavationRate, setSelectedExcavationRate] = useState(0);
+            <!-- Milling Input -->
+            <div class="input-section">
+                <h3 class="section-title text-pink">Milling Input</h3>
+                <label>Area (SY)</label>
+                <input type="number" id="millingArea" value="0">
+                <label>Depth (in)</label>
+                <input type="number" id="millingDepth" value="0">
+                <label>Travel Time (min)</label>
+                <input type="number" id="millingTravelTime" value="0">
+                <select id="millingRate">
+                    <option value="0">--Select Milling Rate--</option>
+                    <option value="1000">1000</option>
+                    <option value="1500">1500</option>
+                    <option value="2000">2000</option>
+                    <option value="2500">2500</option>
+                    <option value="3000">3000</option>
+                    <option value="3500">3500</option>
+                    <option value="4000">4000</option>
+                    <option value="4500">4500</option>
+                    <option value="5000">5000</option>
+                    <option value="5500">5500</option>
+                    <option value="6000">6000</option>
+                    <option value="6500">6500</option>
+                    <option value="7000">7000</option>
+                    <option value="7500">7500</option>
+                    <option value="8000">8000</option>
+                </select>
+            </div>
 
-            const [baseArea, setBaseArea] = useState(0);
-            const [baseDepth, setBaseDepth] = useState(0);
-            const [baseTravelTime, setBaseTravelTime] = useState(0);
-            const [selectedBasePavingRate, setSelectedBasePavingRate] = useState(0);
+            <!-- Base Input -->
+            <div class="input-section">
+                <h3 class="section-title text-blue">19mm64 Base Input</h3>
+                <label>Area (SY)</label>
+                <input type="number" id="baseArea" value="0">
+                <label>Depth (in)</label>
+                <input type="number" id="baseDepth" value="0">
+                <label>Travel Time (min)</label>
+                <input type="number" id="baseTravelTime" value="0">
+                <select id="baseRate">
+                    <option value="0">--Select Base Rate--</option>
+                    <option value="1000">1000</option>
+                    <option value="1500">1500</option>
+                    <option value="2000">2000</option>
+                    <option value="2500">2500</option>
+                    <option value="3000">3000</option>
+                    <option value="3500">3500</option>
+                    <option value="4000">4000</option>
+                    <option value="4500">4500</option>
+                    <option value="5000">5000</option>
+                    <option value="5500">5500</option>
+                    <option value="6000">6000</option>
+                    <option value="6500">6500</option>
+                    <option value="7000">7000</option>
+                    <option value="7500">7500</option>
+                    <option value="8000">8000</option>
+                </select>
+            </div>
 
-            const [surfaceArea, setSurfaceArea] = useState(0);
-            const [pavingDepth, setPavingDepth] = useState(0);
-            const [surfaceTravelTime, setSurfaceTravelTime] = useState(0);
-            const [selectedSurfacePavingRate, setSelectedSurfacePavingRate] = useState(0);
+            <!-- Surface Input -->
+            <div class="input-section">
+                <h3 class="section-title text-green">9.5mm64 Surface Input</h3>
+                <label>Area (SY)</label>
+                <input type="number" id="surfaceArea" value="0">
+                <label>Depth (in)</label>
+                <input type="number" id="surfaceDepth" value="0">
+                <label>Travel Time (min)</label>
+                <input type="number" id="surfaceTravelTime" value="0">
+                <select id="surfaceRate">
+                    <option value="0">--Select Surface Rate--</option>
+                    <option value="1000">1000</option>
+                    <option value="1500">1500</option>
+                    <option value="2000">2000</option>
+                    <option value="2500">2500</option>
+                    <option value="3000">3000</option>
+                    <option value="3500">3500</option>
+                    <option value="4000">4000</option>
+                    <option value="4500">4500</option>
+                    <option value="5000">5000</option>
+                    <option value="5500">5500</option>
+                    <option value="6000">6000</option>
+                    <option value="6500">6500</option>
+                    <option value="7000">7000</option>
+                    <option value="7500">7500</option>
+                    <option value="8000">8000</option>
+                </select>
+            </div>
+        </div>
 
-            const [millingOutput, setMillingOutput] = useState({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
-            const [dgaOutput, setDgaOutput] = useState({ volume: 0, tons: 0, days: 0, truckHours: 0, trucks: 0 });
-            const [excavationOutput, setExcavationOutput] = useState({ volume: 0, days: 0, truckHours: 0, trucks: 0 });
-            const [baseOutput, setBaseOutput] = useState({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
-            const [surfaceOutput, setSurfaceOutput] = useState({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+        <div class="grid">
+            <!-- Excavation Output -->
+            <div class="output-section">
+                <h3 class="section-title text-red">Excavation Output</h3>
+                <p>Volume: <span id="excavationVolume">0</span></p>
+                <p>Days: <span id="excavationDays">0</span></p>
+                <p>Truck Hours: <span id="excavationTruckHours">0</span></p>
+                <p>Trucks Required: <span id="excavationTrucks">0</span></p>
+            </div>
 
-            const millingRateOptions = Array.from({ length: 15 }, (_, i) => 1000 + i * 500);
-            const pavingRateOptions = Array.from({ length: 15 }, (_, i) => 1000 + i * 500);
-            const dgaRateOptions = [100, 200, 300, 400, 500, 600, 700, 800];
-            const excavationRateOptions = [100, 200, 300, 400, 500, 600, 700, 800];
+            <!-- DGA Output -->
+            <div class="output-section">
+                <h3 class="section-title text-yellow">DGA Output</h3>
+                <p>Volume: <span id="dgaVolume">0</span></p>
+                <p>Tons: <span id="dgaTons">0</span></p>
+                <p>Days: <span id="dgaDays">0</span></p>
+                <p>Truck Hours: <span id="dgaTruckHours">0</span></p>
+                <p>Trucks Required: <span id="dgaTrucks">0</span></p>
+            </div>
 
-            function roundUp(val, increment) {
-                return Math.ceil(val / increment) * increment;
-            }
+            <!-- Milling Output -->
+            <div class="output-section">
+                <h3 class="section-title text-pink">Milling Output</h3>
+                <p>Tons: <span id="millingTons">0</span></p>
+                <p>Days: <span id="millingDays">0</span></p>
+                <p>Truck Hours: <span id="millingTruckHours">0</span></p>
+                <p>Trucks Required: <span id="millingTrucks">0</span></p>
+            </div>
 
-            const calculateOutput = () => {
-                // Excavation calculations
-                const excavationVolume = roundUp(excavationArea * excavationDepth / 324, 1);
-                const excavationDays = Math.ceil((excavationVolume / selectedExcavationRate) * 2) / 2;
-                const excavationTruckHours = Math.round((excavationVolume / 20) * excavationTravelTime);
-                const excavationTrucks = Math.ceil(excavationTruckHours / 8);
-                setExcavationOutput({ volume: excavationVolume, days: excavationDays, truckHours: excavationTruckHours, trucks: excavationTrucks });
+            <!-- Base Output -->
+            <div class="output-section">
+                <h3 class="section-title text-blue">19mm64 Base Output</h3>
+                <p>Tons: <span id="baseTons">0</span></p>
+                <p>Days: <span id="baseDays">0</span></p>
+                <p>Truck Hours: <span id="baseTruckHours">0</span></p>
+                <p>Trucks Required: <span id="baseTrucks">0</span></p>
+            </div>
 
-                // DGA calculations
-                const dgaVolume = roundUp(dgaArea * dgaDepth / 324, 1);
-                const dgaTons = roundUp(dgaVolume * 1.9, 1);
-                const dgaDays = Math.ceil((dgaVolume / selectedDgaRate) * 2) / 2;
-                const dgaTruckHours = Math.round((dgaTons / 24) * dgaTravelTime);
-                const dgaTrucks = Math.ceil(dgaTruckHours / 8);
-                setDgaOutput({ volume: dgaVolume, tons: dgaTons, days: dgaDays, truckHours: dgaTruckHours, trucks: dgaTrucks });
+            <!-- Surface Output -->
+            <div class="output-section">
+                <h3 class="section-title text-green">9.5mm64 Surface Output</h3>
+                <p>Tons: <span id="surfaceTons">0</span></p>
+                <p>Days: <span id="surfaceDays">0</span></p>
+                <p>Truck Hours: <span id="surfaceTruckHours">0</span></p>
+                <p>Trucks Required: <span id="surfaceTrucks">0</span></p>
+            </div>
+        </div>
 
-                // Milling calculations
-                const millingTons = roundUp(millingArea * millingDepth * 0.0575, 1);
-                const millingDays = Math.ceil((millingArea / selectedMillingRate) * 2) / 2;
-                const millingTruckHours = Math.round((millingTons / 20) * millingTravelTime);
-                const millingTrucks = Math.ceil(millingTruckHours / 8);
-                setMillingOutput({ tons: millingTons, days: millingDays, truckHours: millingTruckHours, trucks: millingTrucks });
+        <div class="reference">
+            <h3>Reference Calculations</h3>
+            <ul>
+                <li>Excavation Volume (CY): (Area × Depth) ÷ 324</li>
+                <li>DGA Volume (CY): (Area × Depth) ÷ 324</li>
+                <li>DGA Tons: Volume × 1.9</li>
+                <li>Milling Tons: Area × Depth × 0.0575</li>
+                <li>Base Tons: Area × Depth × 0.0575</li>
+                <li>Surface Tons: Area × Depth × 0.0575</li>
+                <li>Days: ((Area ÷ Daily Rate) × 2), rounded to nearest 0.5</li>
+                <li>Truck Hours (Excavation & DGA): (Volume ÷ Truck Capacity) × Travel Time</li>
+                <li>Truck Hours (Milling/Base/Surface): (Tons ÷ Truck Capacity) × Travel Time</li>
+                <li>Truck Capacity: 20 tons for Milling & Excavation, 24 tons for DGA/Base/Surface</li>
+                <li>Trucks Required: Truck Hours ÷ 8</li>
+            </ul>
+        </div>
+    </div>
 
-                // Base calculations
-                const baseTons = roundUp(baseArea * baseDepth * 0.0575, 1);
-                const baseDays = Math.ceil((baseArea / selectedBasePavingRate) * 2) / 2;
-                const baseTruckHours = Math.round((baseTons / 24) * baseTravelTime);
-                const baseTrucks = Math.ceil(baseTruckHours / 8);
-                setBaseOutput({ tons: baseTons, days: baseDays, truckHours: baseTruckHours, trucks: baseTrucks });
-
-                // Surface calculations
-                const surfaceTons = roundUp(surfaceArea * pavingDepth * 0.0575, 1);
-                const surfaceDays = Math.ceil((surfaceArea / selectedSurfacePavingRate) * 2) / 2;
-                const surfaceTruckHours = Math.round((surfaceTons / 24) * surfaceTravelTime);
-                const surfaceTrucks = Math.ceil(surfaceTruckHours / 8);
-                setSurfaceOutput({ tons: surfaceTons, days: surfaceDays, truckHours: surfaceTruckHours, trucks: surfaceTrucks });
-            };
-
-            const resetForm = () => {
-                setMillingArea(0);
-                setMillingDepth(0);
-                setMillingTravelTime(0);
-                setSelectedMillingRate(0);
-                setDgaArea(0);
-                setDgaDepth(0);
-                setDgaTravelTime(0);
-                setSelectedDgaRate(0);
-                setExcavationArea(0);
-                setExcavationDepth(0);
-                setExcavationTravelTime(0);
-                setSelectedExcavationRate(0);
-                setBaseArea(0);
-                setBaseDepth(0);
-                setBaseTravelTime(0);
-                setSelectedBasePavingRate(0);
-                setSurfaceArea(0);
-                setPavingDepth(0);
-                setSurfaceTravelTime(0);
-                setSelectedSurfacePavingRate(0);
-                setMillingOutput({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
-                setDgaOutput({ volume: 0, tons: 0, days: 0, truckHours: 0, trucks: 0 });
-                setExcavationOutput({ volume: 0, days: 0, truckHours: 0, trucks: 0 });
-                setBaseOutput({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
-                setSurfaceOutput({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
-            };
-
-            return (
-                <div className="bg-gray-900 min-h-screen text-white p-6">
-                    <div className="flex gap-4 mb-8">
-                        <button 
-                            onClick={calculateOutput} 
-                            className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white"
-                        >
-                            Calculate
-                        </button>
-                        <button 
-                            onClick={resetForm} 
-                            className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white"
-                        >
-                            Reset Form
-                        </button>
-                    </div>
-
-                    <div className="text-center text-xl font-bold mt-2 mb-6">Steve's Paving Calculator</div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                        {/* Excavation Input */}
-                        <div className="space-y-2">
-                            <h3 className="font-bold mb-2 text-red-400">Excavation Input</h3>
-                            <label>Area (SY)</label>
-                            <input 
-                                type="number" 
-                                value={excavationArea} 
-                                onChange={e => setExcavationArea(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Depth (in)</label>
-                            <input 
-                                type="number" 
-                                value={excavationDepth} 
-                                onChange={e => setExcavationDepth(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Travel Time (min)</label>
-                            <input 
-                                type="number" 
-                                value={excavationTravelTime} 
-                                onChange={e => setExcavationTravelTime(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <select 
-                                value={selectedExcavationRate} 
-                                onChange={e => setSelectedExcavationRate(parseFloat(e.target.value))} 
-                                className="text-black w-full p-2 rounded"
-                            >
-                                <option value={0}>--Select Excavation Rate--</option>
-                                {excavationRateOptions.map(rate => 
-                                    <option key={rate} value={rate}>{rate}</option>
-                                )}
-                            </select>
-                        </div>
-
-                        {/* DGA Input */}
-                        <div className="space-y-2">
-                            <h3 className="font-bold mb-2 text-yellow-400">DGA Input</h3>
-                            <label>Area (SY)</label>
-                            <input 
-                                type="number" 
-                                value={dgaArea} 
-                                onChange={e => setDgaArea(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Depth (in)</label>
-                            <input 
-                                type="number" 
-                                value={dgaDepth} 
-                                onChange={e => setDgaDepth(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Travel Time (min)</label>
-                            <input 
-                                type="number" 
-                                value={dgaTravelTime} 
-                                onChange={e => setDgaTravelTime(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <select 
-                                value={selectedDgaRate} 
-                                onChange={e => setSelectedDgaRate(parseFloat(e.target.value))} 
-                                className="text-black w-full p-2 rounded"
-                            >
-                                <option value={0}>--Select DGA Rate--</option>
-                                {dgaRateOptions.map(rate => 
-                                    <option key={rate} value={rate}>{rate}</option>
-                                )}
-                            </select>
-                        </div>
-
-                        {/* Milling Input */}
-                        <div className="space-y-2">
-                            <h3 className="font-bold mb-2 text-pink-400">Milling Input</h3>
-                            <label>Area (SY)</label>
-                            <input 
-                                type="number" 
-                                value={millingArea} 
-                                onChange={e => setMillingArea(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Depth (in)</label>
-                            <input 
-                                type="number" 
-                                value={millingDepth} 
-                                onChange={e => setMillingDepth(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Travel Time (min)</label>
-                            <input 
-                                type="number" 
-                                value={millingTravelTime} 
-                                onChange={e => setMillingTravelTime(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <select 
-                                value={selectedMillingRate} 
-                                onChange={e => setSelectedMillingRate(parseFloat(e.target.value))} 
-                                className="text-black w-full p-2 rounded"
-                            >
-                                <option value={0}>--Select Milling Rate--</option>
-                                {millingRateOptions.map(rate => 
-                                    <option key={rate} value={rate}>{rate}</option>
-                                )}
-                            </select>
-                        </div>
-
-                        {/* Base Input */}
-                        <div className="space-y-2">
-                            <h3 className="font-bold mb-2 text-blue-400">19mm64 Base Input</h3>
-                            <label>Area (SY)</label>
-                            <input 
-                                type="number" 
-                                value={baseArea} 
-                                onChange={e => setBaseArea(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Depth (in)</label>
-                            <input 
-                                type="number" 
-                                value={baseDepth} 
-                                onChange={e => setBaseDepth(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Travel Time (min)</label>
-                            <input 
-                                type="number" 
-                                value={baseTravelTime} 
-                                onChange={e => setBaseTravelTime(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <select 
-                                value={selectedBasePavingRate} 
-                                onChange={e => setSelectedBasePavingRate(parseFloat(e.target.value))} 
-                                className="text-black w-full p-2 rounded"
-                            >
-                                <option value={0}>--Select Base Rate--</option>
-                                {pavingRateOptions.map(rate => 
-                                    <option key={rate} value={rate}>{rate}</option>
-                                )}
-                            </select>
-                        </div>
-
-                        {/* Surface Input */}
-                        <div className="space-y-2">
-                            <h3 className="font-bold mb-2 text-green-400">9.5mm64 Surface Input</h3>
-                            <label>Area (SY)</label>
-                            <input 
-                                type="number" 
-                                value={surfaceArea} 
-                                onChange={e => setSurfaceArea(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Depth (in)</label>
-                            <input 
-                                type="number" 
-                                value={pavingDepth} 
-                                onChange={e => setPavingDepth(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <label>Travel Time (min)</label>
-                            <input 
-                                type="number" 
-                                value={surfaceTravelTime} 
-                                onChange={e => setSurfaceTravelTime(parseFloat(e.target.value) || 0)} 
-                                className="text-black w-full p-2 rounded" 
-                            />
-                            <select 
-                                value={selectedSurfacePavingRate} 
-                                onChange={e => setSelectedSurfacePavingRate(parseFloat(e.target.value))} 
-                                className="text-black w-full p-2 rounded"
-                            >
-                                <option value={0}>--Select Surface Rate--</option>
-                                {pavingRateOptions.map(rate => 
-                                    <option key={rate} value={rate}>{rate}</option>
-                                )}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-6">
-                        {/* Excavation Output */}
-                        <div>
-                            <h3 className="font-bold mb-2 text-red-400">Excavation Output</h3>
-                            <p>Volume: {excavationOutput.volume}</p>
-                            <p>Days: {excavationOutput.days}</p>
-                            <p>Truck Hours: {excavationOutput.truckHours}</p>
-                            <p>Trucks Required: {excavationOutput.trucks}</p>
-                        </div>
-
-                        {/* DGA Output */}
-                        <div>
-                            <h3 className="font-bold mb-2 text-yellow-400">DGA Output</h3>
-                            <p>Volume: {dgaOutput.volume}</p>
-                            <p>Tons: {dgaOutput.tons}</p>
-                            <p>Days: {dgaOutput.days}</p>
-                            <p>Truck Hours: {dgaOutput.truckHours}</p>
-                            <p>Trucks Required: {dgaOutput.trucks}</p>
-                        </div>
-
-                        {/* Milling Output */}
-                        <div>
-                            <h3 className="font-bold mb-2 text-pink-400">Milling Output</h3>
-                            <p>Tons: {millingOutput.tons}</p>
-                            <p>Days: {millingOutput.days}</p>
-                            <p>Truck Hours: {millingOutput.truckHours}</p>
-                            <p>Trucks Required: {millingOutput.trucks}</p>
-                        </div>
-
-                        {/* Base Output */}
-                        <div>
-                            <h3 className="font-bold mb-2 text-blue-400">19mm64 Base Output</h3>
-                            <p>Tons: {baseOutput.tons}</p>
-                            <p>Days: {baseOutput.days}</p>
-                            <p>Truck Hours: {baseOutput.truckHours}</p>
-                            <p>Trucks Required: {baseOutput.trucks}</p>
-                        </div>
-
-                        {/* Surface Output */}
-                        <div>
-                            <h3 className="font-bold mb-2 text-green-400">9.5mm64 Surface Output</h3>
-                            <p>Tons: {surfaceOutput.tons}</p>
-                            <p>Days: {surfaceOutput.days}</p>
-                            <p>Truck Hours: {surfaceOutput.truckHours}</p>
-                            <p>Trucks Required: {surfaceOutput.trucks}</p>
-                        </div>
-                    </div>
-
-                    <div className="text-sm bg-gray-800 rounded p-4 mt-6">
-                        <h3 className="underline mb-2">Reference Calculations</h3>
-                        <ul className="list-disc pl-5">
-                            <li>Excavation Volume (CY): (Area × Depth) ÷ 324</li>
-                            <li>DGA Volume (CY): (Area × Depth) ÷ 324</li>
-                            <li>DGA Tons: Volume × 1.9</li>
-                            <li>Milling Tons: Area × Depth × 0.0575</li>
-                            <li>Base Tons: Area × Depth × 0.0575</li>
-                            <li>Surface Tons: Area × Depth × 0.0575</li>
-                            <li>Days: ((Area ÷ Daily Rate) × 2), rounded to nearest 0.5</li>
-                            <li>Truck Hours (Excavation & DGA): (Volume ÷ Truck Capacity) × Travel Time</li>
-                            <li>Truck Hours (Milling/Base/Surface): (Tons ÷ Truck Capacity) × Travel Time</li>
-                            <li>Truck Capacity: 20 tons for Milling & Excavation, 24 tons for DGA/Base/Surface</li>
-                            <li>Trucks Required: Truck Hours ÷ 8</li>
-                        </ul>
-                    </div>
-                </div>
-            );
+    <script>
+        function roundUp(val, increment) {
+            return Math.ceil(val / increment) * increment;
         }
 
-        ReactDOM.render(React.createElement(ProductivityEstimator), document.getElementById('root'));
+        function calculateOutput() {
+            // Get input values
+            const excavationArea = parseFloat(document.getElementById('excavationArea').value) || 0;
+            const excavationDepth = parseFloat(document.getElementById('excavationDepth').value) || 0;
+            const excavationTravelTime = parseFloat(document.getElementById('excavationTravelTime').value) || 0;
+            const excavationRate = parseFloat(document.getElementById('excavationRate').value) || 0;
+
+            const dgaArea = parseFloat(document.getElementById('dgaArea').value) || 0;
+            const dgaDepth = parseFloat(document.getElementById('dgaDepth').value) || 0;
+            const dgaTravelTime = parseFloat(document.getElementById('dgaTravelTime').value) || 0;
+            const dgaRate = parseFloat(document.getElementById('dgaRate').value) || 0;
+
+            const millingArea = parseFloat(document.getElementById('millingArea').value) || 0;
+            const millingDepth = parseFloat(document.getElementById('millingDepth').value) || 0;
+            const millingTravelTime = parseFloat(document.getElementById('millingTravelTime').value) || 0;
+            const millingRate = parseFloat(document.getElementById('millingRate').value) || 0;
+
+            const baseArea = parseFloat(document.getElementById('baseArea').value) || 0;
+            const baseDepth = parseFloat(document.getElementById('baseDepth').value) || 0;
+            const baseTravelTime = parseFloat(document.getElementById('baseTravelTime').value) || 0;
+            const baseRate = parseFloat(document.getElementById('baseRate').value) || 0;
+
+            const surfaceArea = parseFloat(document.getElementById('surfaceArea').value) || 0;
+            const surfaceDepth = parseFloat(document.getElementById('surfaceDepth').value) || 0;
+            const surfaceTravelTime = parseFloat(document.getElementById('surfaceTravelTime').value) || 0;
+            const surfaceRate = parseFloat(document.getElementById('surfaceRate').value) || 0;
+
+            // Excavation calculations
+            const excavationVolume = roundUp(excavationArea * excavationDepth / 324, 1);
+            const excavationDays = Math.ceil((excavationVolume / excavationRate) * 2) / 2;
+            const excavationTruckHours = Math.round((excavationVolume / 20) * excavationTravelTime);
+            const excavationTrucks = Math.ceil(excavationTruckHours / 8);
+
+            // DGA calculations
+            const dgaVolume = roundUp(dgaArea * dgaDepth / 324, 1);
+            const dgaTons = roundUp(dgaVolume * 1.9, 1);
+            const dgaDays = Math.ceil((dgaVolume / dgaRate) * 2) / 2;
+            const dgaTruckHours = Math.round((dgaTons / 24) * dgaTravelTime);
+            const dgaTrucks = Math.ceil(dgaTruckHours / 8);
+
+            // Milling calculations
+            const millingTons = roundUp(millingArea * millingDepth * 0.0575, 1);
+            const millingDays = Math.ceil((millingArea / millingRate) * 2) / 2;
+            const millingTruckHours = Math.round((millingTons / 20) * millingTravelTime);
+            const millingTrucks = Math.ceil(millingTruckHours / 8);
+
+            // Base calculations
+            const baseTons = roundUp(baseArea * baseDepth * 0.0575, 1);
+            const baseDays = Math.ceil((baseArea / baseRate) * 2) / 2;
+            const baseTruckHours = Math.round((baseTons / 24) * baseTravelTime);
+            const baseTrucks = Math.ceil(baseTruckHours / 8);
+
+            // Surface calculations
+            const surfaceTons = roundUp(surfaceArea * surfaceDepth * 0.0575, 1);
+            const surfaceDays = Math.ceil((surfaceArea / surfaceRate) * 2) / 2;
+            const surfaceTruckHours = Math.round((surfaceTons / 24) * surfaceTravelTime);
+            const surfaceTrucks = Math.ceil(surfaceTruckHours / 8);
+
+            // Update output displays
+            document.getElementById('excavationVolume').textContent = excavationVolume;
+            document.getElementById('excavationDays').textContent = excavationDays;
+            document.getElementById('excavationTruckHours').textContent = excavationTruckHours;
+            document.getElementById('excavationTrucks').textContent = excavationTrucks;
+
+            document.getElementById('dgaVolume').textContent = dgaVolume;
+            document.getElementById('dgaTons').textContent = dgaTons;
+            document.getElementById('dgaDays').textContent = dgaDays;
+            document.getElementById('dgaTruckHours').textContent = dgaTruckHours;
+            document.getElementById('dgaTrucks').textContent = dgaTrucks;
+
+            document.getElementById('millingTons').textContent = millingTons;
+            document.getElementById('millingDays').textContent = millingDays;
+            document.getElementById('millingTruckHours').textContent = millingTruckHours;
+            document.getElementById('millingTrucks').textContent = millingTrucks;
+
+            document.getElementById('baseTons').textContent = baseTons;
+            document.getElementById('baseDays').textContent = baseDays;
+            document.getElementById('baseTruckHours').textContent = baseTruckHours;
+            document.getElementById('baseTrucks').textContent = baseTrucks;
+
+            document.getElementById('surfaceTons').textContent = surfaceTons;
+            document.getElementById('surfaceDays').textContent = surfaceDays;
+            document.getElementById('surfaceTruckHours').textContent = surfaceTruckHours;
+            document.getElementById('surfaceTrucks').textContent = surfaceTrucks;
+        }
+
+        function resetForm() {
+            // Reset all input fields
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => input.value = '0');
+
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => select.value = '0');
+
+            // Reset all output displays
+            const outputs = document.querySelectorAll('span[id*="excavation"], span[id*="dga"], span[id*="milling"], span[id*="base"], span[id*="surface"]');
+            outputs.forEach(output => output.textContent = '0');
+        }
     </script>
 </body>
 </html>
