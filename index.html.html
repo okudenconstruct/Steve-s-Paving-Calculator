@@ -1,0 +1,251 @@
+import { useState } from "react";
+
+export default function ProductivityEstimator() {
+  const [millingArea, setMillingArea] = useState(0);
+  const [millingDepth, setMillingDepth] = useState(0);
+  const [millingTravelTime, setMillingTravelTime] = useState(0);
+  const [selectedMillingRate, setSelectedMillingRate] = useState(0);
+
+  const [dgaArea, setDgaArea] = useState(0);
+  const [dgaDepth, setDgaDepth] = useState(0);
+  const [dgaTravelTime, setDgaTravelTime] = useState(0);
+  const [selectedDgaRate, setSelectedDgaRate] = useState(0);
+
+  const [excavationArea, setExcavationArea] = useState(0);
+  const [excavationDepth, setExcavationDepth] = useState(0);
+  const [excavationTravelTime, setExcavationTravelTime] = useState(0);
+  const [selectedExcavationRate, setSelectedExcavationRate] = useState(0);
+
+  const [baseArea, setBaseArea] = useState(0);
+  const [baseDepth, setBaseDepth] = useState(0);
+  const [baseTravelTime, setBaseTravelTime] = useState(0);
+  const [selectedBasePavingRate, setSelectedBasePavingRate] = useState(0);
+
+  const [surfaceArea, setSurfaceArea] = useState(0);
+  const [pavingDepth, setPavingDepth] = useState(0);
+  const [surfaceTravelTime, setSurfaceTravelTime] = useState(0);
+  const [selectedSurfacePavingRate, setSelectedSurfacePavingRate] = useState(0);
+
+  const [millingOutput, setMillingOutput] = useState({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+  const [dgaOutput, setDgaOutput] = useState({ volume: 0, tons: 0, days: 0, truckHours: 0, trucks: 0 });
+  const [excavationOutput, setExcavationOutput] = useState({ volume: 0, days: 0, truckHours: 0, trucks: 0 });
+  const [baseOutput, setBaseOutput] = useState({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+  const [surfaceOutput, setSurfaceOutput] = useState({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+
+  const millingRateOptions = Array.from({ length: 15 }, (_, i) => 1000 + i * 500);
+  const pavingRateOptions = Array.from({ length: 15 }, (_, i) => 1000 + i * 500);
+  const dgaRateOptions = [100, 200, 300, 400, 500, 600, 700, 800];
+  const excavationRateOptions = [100, 200, 300, 400, 500, 600, 700, 800];
+
+  function roundUp(val, increment) {
+    return Math.ceil(val / increment) * increment;
+  }
+
+  const calculateOutput = () => {
+    const excavationVolume = roundUp(excavationArea * excavationDepth / 324, 1);
+    const excavationDays = Math.ceil(((excavationVolume / selectedExcavationRate) * 2) * 2) / 2;
+    const excavationTruckHours = Math.round((excavationVolume / 20) * excavationTravelTime);
+    const excavationTrucks = Math.ceil(excavationTruckHours / 8);
+    setExcavationOutput({ volume: excavationVolume, days: excavationDays, truckHours: excavationTruckHours, trucks: excavationTrucks });
+
+    const dgaVolume = roundUp(dgaArea * dgaDepth / 324, 1);
+    const dgaTons = roundUp(dgaVolume * 1.9, 1);
+    const dgaDays = Math.ceil(((dgaVolume / selectedDgaRate) * 2) * 2) / 2;
+    const dgaTruckHours = Math.round((dgaTons / 24) * dgaTravelTime);
+    const dgaTrucks = Math.ceil(dgaTruckHours / 8);
+    setDgaOutput({ volume: dgaVolume, tons: dgaTons, days: dgaDays, truckHours: dgaTruckHours, trucks: dgaTrucks });
+
+    const millingTons = roundUp(millingArea * millingDepth * 0.0575, 1);
+    const millingDays = Math.ceil(((millingArea / selectedMillingRate) * 2) * 2) / 2;
+    const millingTruckHours = Math.round((millingTons / 20) * millingTravelTime);
+    const millingTrucks = Math.ceil(millingTruckHours / 8);
+    setMillingOutput({ tons: millingTons, days: millingDays, truckHours: millingTruckHours, trucks: millingTrucks });
+
+    const baseTons = roundUp(baseArea * baseDepth * 0.0575, 1);
+    const baseDays = Math.ceil(((baseArea / selectedBasePavingRate) * 2) * 2) / 2;
+    const baseTruckHours = Math.round((baseTons / 24) * baseTravelTime);
+    const baseTrucks = Math.ceil(baseTruckHours / 8);
+    setBaseOutput({ tons: baseTons, days: baseDays, truckHours: baseTruckHours, trucks: baseTrucks });
+
+    const surfaceTons = roundUp(surfaceArea * pavingDepth * 0.0575, 1);
+    const surfaceDays = Math.ceil(((surfaceArea / selectedSurfacePavingRate) * 2) * 2) / 2;
+    const surfaceTruckHours = Math.round((surfaceTons / 24) * surfaceTravelTime);
+    const surfaceTrucks = Math.ceil(surfaceTruckHours / 8);
+    setSurfaceOutput({ tons: surfaceTons, days: surfaceDays, truckHours: surfaceTruckHours, trucks: surfaceTrucks });
+  };
+
+  const resetForm = () => {
+    setMillingArea(0);
+    setMillingDepth(0);
+    setMillingTravelTime(0);
+    setSelectedMillingRate(0);
+    setDgaArea(0);
+    setDgaDepth(0);
+    setDgaTravelTime(0);
+    setSelectedDgaRate(0);
+    setExcavationArea(0);
+    setExcavationDepth(0);
+    setExcavationTravelTime(0);
+    setSelectedExcavationRate(0);
+    setBaseArea(0);
+    setBaseDepth(0);
+    setBaseTravelTime(0);
+    setSelectedBasePavingRate(0);
+    setSurfaceArea(0);
+    setPavingDepth(0);
+    setSurfaceTravelTime(0);
+    setSelectedSurfacePavingRate(0);
+    setMillingOutput({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+    setDgaOutput({ volume: 0, tons: 0, days: 0, truckHours: 0, trucks: 0 });
+    setExcavationOutput({ volume: 0, days: 0, truckHours: 0, trucks: 0 });
+    setBaseOutput({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+    setSurfaceOutput({ tons: 0, days: 0, truckHours: 0, trucks: 0 });
+  };
+
+  return (
+    <div className="bg-gray-900 min-h-screen text-white p-6">
+      <div className="flex gap-4 mb-8">
+        <button onClick={calculateOutput} className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white">
+          Calculate
+        </button>
+        <button onClick={resetForm} className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded text-white">
+          Reset Form
+        </button>
+      </div>
+
+      <div className="text-center text-xl font-bold mt-2 mb-6">Steve's Paving Calculator</div>
+
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="space-y-2">
+          <h3 className="font-bold mb-2 text-red-400">Excavation Input</h3>
+          <label>Area (SY)</label>
+          <input type="number" value={excavationArea} onChange={e => setExcavationArea(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Depth (in)</label>
+          <input type="number" value={excavationDepth} onChange={e => setExcavationDepth(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Travel Time (min)</label>
+          <input type="number" value={excavationTravelTime} onChange={e => setExcavationTravelTime(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <select value={selectedExcavationRate} onChange={e => setSelectedExcavationRate(parseFloat(e.target.value))} className="text-black w-full p-2 rounded">
+            <option value={0}>--Select Excavation Rate--</option>
+            {excavationRateOptions.map(rate => <option key={rate} value={rate}>{rate}</option>)}
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="font-bold mb-2 text-yellow-400">DGA Input</h3>
+          <label>Area (SY)</label>
+          <input type="number" value={dgaArea} onChange={e => setDgaArea(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Depth (in)</label>
+          <input type="number" value={dgaDepth} onChange={e => setDgaDepth(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Travel Time (min)</label>
+          <input type="number" value={dgaTravelTime} onChange={e => setDgaTravelTime(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <select value={selectedDgaRate} onChange={e => setSelectedDgaRate(parseFloat(e.target.value))} className="text-black w-full p-2 rounded">
+            <option value={0}>--Select DGA Rate--</option>
+            {dgaRateOptions.map(rate => <option key={rate} value={rate}>{rate}</option>)}
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="font-bold mb-2 text-pink-400">Milling Input</h3>
+          <label>Area (SY)</label>
+          <input type="number" value={millingArea} onChange={e => setMillingArea(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Depth (in)</label>
+          <input type="number" value={millingDepth} onChange={e => setMillingDepth(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Travel Time (min)</label>
+          <input type="number" value={millingTravelTime} onChange={e => setMillingTravelTime(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <select value={selectedMillingRate} onChange={e => setSelectedMillingRate(parseFloat(e.target.value))} className="text-black w-full p-2 rounded">
+            <option value={0}>--Select Milling Rate--</option>
+            {millingRateOptions.map(rate => <option key={rate} value={rate}>{rate}</option>)}
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="font-bold mb-2 text-blue-400">19mm64 Base Input</h3>
+          <label>Area (SY)</label>
+          <input type="number" value={baseArea} onChange={e => setBaseArea(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Depth (in)</label>
+          <input type="number" value={baseDepth} onChange={e => setBaseDepth(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Travel Time (min)</label>
+          <input type="number" value={baseTravelTime} onChange={e => setBaseTravelTime(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <select value={selectedBasePavingRate} onChange={e => setSelectedBasePavingRate(parseFloat(e.target.value))} className="text-black w-full p-2 rounded">
+            <option value={0}>--Select Base Rate--</option>
+            {pavingRateOptions.map(rate => <option key={rate} value={rate}>{rate}</option>)}
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="font-bold mb-2 text-green-400">9.5mm64 Surface Input</h3>
+          <label>Area (SY)</label>
+          <input type="number" value={surfaceArea} onChange={e => setSurfaceArea(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Depth (in)</label>
+          <input type="number" value={pavingDepth} onChange={e => setPavingDepth(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <label>Travel Time (min)</label>
+          <input type="number" value={surfaceTravelTime} onChange={e => setSurfaceTravelTime(parseFloat(e.target.value) || 0)} className="text-black w-full p-2 rounded" />
+          <select value={selectedSurfacePavingRate} onChange={e => setSelectedSurfacePavingRate(parseFloat(e.target.value))} className="text-black w-full p-2 rounded">
+            <option value={0}>--Select Surface Rate--</option>
+            {pavingRateOptions.map(rate => <option key={rate} value={rate}>{rate}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-6">
+        <div>
+          <h3 className="font-bold mb-2 text-red-400">Excavation Output</h3>
+          <p>Volume: {excavationOutput.volume}</p>
+          <p>Days: {excavationOutput.days}</p>
+          <p>Truck Hours: {excavationOutput.truckHours}</p>
+          <p>Trucks Required: {excavationOutput.trucks}</p>
+        </div>
+
+        <div>
+          <h3 className="font-bold mb-2 text-yellow-400">DGA Output</h3>
+          <p>Volume: {dgaOutput.volume}</p>
+          <p>Tons: {dgaOutput.tons}</p>
+          <p>Days: {dgaOutput.days}</p>
+          <p>Truck Hours: {dgaOutput.truckHours}</p>
+          <p>Trucks Required: {dgaOutput.trucks}</p>
+        </div>
+
+        <div>
+          <h3 className="font-bold mb-2 text-pink-400">Milling Output</h3>
+          <p>Tons: {millingOutput.tons}</p>
+          <p>Days: {millingOutput.days}</p>
+          <p>Truck Hours: {millingOutput.truckHours}</p>
+          <p>Trucks Required: {millingOutput.trucks}</p>
+        </div>
+
+        <div>
+          <h3 className="font-bold mb-2 text-blue-400">19mm64 Base Output</h3>
+          <p>Tons: {baseOutput.tons}</p>
+          <p>Days: {baseOutput.days}</p>
+          <p>Truck Hours: {baseOutput.truckHours}</p>
+          <p>Trucks Required: {baseOutput.trucks}</p>
+        </div>
+
+        <div>
+          <h3 className="font-bold mb-2 text-green-400">9.5mm64 Surface Output</h3>
+          <p>Tons: {surfaceOutput.tons}</p>
+          <p>Days: {surfaceOutput.days}</p>
+          <p>Truck Hours: {surfaceOutput.truckHours}</p>
+          <p>Trucks Required: {surfaceOutput.trucks}</p>
+        </div>
+      </div>
+
+      <div className="text-sm bg-gray-800 rounded p-4 mt-6">
+        <h3 className="underline mb-2">Reference Calculations</h3>
+        <ul className="list-disc pl-5">
+          <li>Excavation Volume (CY): (Area × Depth) ÷ 324</li>
+          <li>DGA Volume (CY): (Area × Depth) ÷ 324</li>
+          <li>DGA Tons: Volume × 1.9</li>
+          <li>Milling Tons: Area × Depth × 0.0575</li>
+          <li>Base Tons: Area × Depth × 0.0575</li>
+          <li>Surface Tons: Area × Depth × 0.0575</li>
+          <li>Days: ((Area ÷ Daily Rate) × 2), rounded to nearest 0.5</li>
+          <li>Truck Hours (Excavation & DGA): (Volume ÷ Truck Capacity) × Travel Time</li>
+          <li>Truck Hours (Milling/Base/Surface): (Tons ÷ Truck Capacity) × Travel Time</li>
+          <li>Truck Capacity: 20 tons for Milling & Excavation, 24 tons for DGA/Base/Surface</li>
+          <li>Trucks Required: Truck Hours ÷ 8</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
