@@ -43,32 +43,32 @@ export default function ProductivityEstimator() {
 
   const calculateOutput = () => {
     const excavationVolume = roundUp(excavationArea * excavationDepth / 324, 1);
-    const excavationDays = Math.ceil(((excavationVolume / selectedExcavationRate) * 2) * 2) / 2;
+    const excavationDays = Math.ceil((excavationVolume / selectedExcavationRate) * 2) / 2;
     const excavationTruckHours = Math.round((excavationVolume / 20) * excavationTravelTime);
     const excavationTrucks = Math.ceil(excavationTruckHours / 8);
     setExcavationOutput({ volume: excavationVolume, days: excavationDays, truckHours: excavationTruckHours, trucks: excavationTrucks });
 
     const dgaVolume = roundUp(dgaArea * dgaDepth / 324, 1);
     const dgaTons = roundUp(dgaVolume * 1.9, 1);
-    const dgaDays = Math.ceil(((dgaVolume / selectedDgaRate) * 2) * 2) / 2;
+    const dgaDays = Math.ceil((dgaVolume / selectedDgaRate) * 2) / 2;
     const dgaTruckHours = Math.round((dgaTons / 24) * dgaTravelTime);
     const dgaTrucks = Math.ceil(dgaTruckHours / 8);
     setDgaOutput({ volume: dgaVolume, tons: dgaTons, days: dgaDays, truckHours: dgaTruckHours, trucks: dgaTrucks });
 
     const millingTons = roundUp(millingArea * millingDepth * 0.0575, 1);
-    const millingDays = Math.ceil(((millingArea / selectedMillingRate) * 2) * 2) / 2;
+    const millingDays = Math.ceil((millingArea / selectedMillingRate) * 2) / 2;
     const millingTruckHours = Math.round((millingTons / 20) * millingTravelTime);
     const millingTrucks = Math.ceil(millingTruckHours / 8);
     setMillingOutput({ tons: millingTons, days: millingDays, truckHours: millingTruckHours, trucks: millingTrucks });
 
     const baseTons = roundUp(baseArea * baseDepth * 0.0575, 1);
-    const baseDays = Math.ceil(((baseArea / selectedBasePavingRate) * 2) * 2) / 2;
+    const baseDays = Math.ceil((baseArea / selectedBasePavingRate) * 2) / 2;
     const baseTruckHours = Math.round((baseTons / 24) * baseTravelTime);
     const baseTrucks = Math.ceil(baseTruckHours / 8);
     setBaseOutput({ tons: baseTons, days: baseDays, truckHours: baseTruckHours, trucks: baseTrucks });
 
     const surfaceTons = roundUp(surfaceArea * pavingDepth * 0.0575, 1);
-    const surfaceDays = Math.ceil(((surfaceArea / selectedSurfacePavingRate) * 2) * 2) / 2;
+    const surfaceDays = Math.ceil((surfaceArea / selectedSurfacePavingRate) * 2) / 2;
     const surfaceTruckHours = Math.round((surfaceTons / 24) * surfaceTravelTime);
     const surfaceTrucks = Math.ceil(surfaceTruckHours / 8);
     setSurfaceOutput({ tons: surfaceTons, days: surfaceDays, truckHours: surfaceTruckHours, trucks: surfaceTrucks });
