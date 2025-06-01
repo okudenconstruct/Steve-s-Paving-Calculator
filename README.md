@@ -1,0 +1,1 @@
+THis is a utility I'm working on to be able to calculate paving construction activities. This is designed to be used by construction cost estimators. This tool requires knowledge of realistic production rates and truck travel times combined with loading and unloading times for various materials.
