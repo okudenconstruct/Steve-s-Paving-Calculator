@@ -557,44 +557,44 @@
             const surfaceRate = parseFloat(document.getElementById('surfaceRate').value) || 0;
 
             // Excavation calculations
-            const excavationVolume = roundUp(excavationArea * excavationDepth / 324, 1);
-            const excavationDays = Math.ceil(excavationVolume / excavationRate * 2) / 2;
-            const excavationDailyVolume = excavationVolume / excavationDays;
+            const excavationVolume = excavationArea && excavationDepth ? roundUp(excavationArea * excavationDepth / 324, 1) : 0;
+            const excavationDays = excavationVolume && excavationRate ? Math.ceil(excavationVolume / excavationRate * 2) / 2 : 0;
+            const excavationDailyVolume = excavationDays > 0 ? excavationVolume / excavationDays : 0;
             const excavationLoadsPerDay = excavationDailyVolume / 16; // 16 CY per truck
-            const excavationTrucks = Math.ceil((excavationLoadsPerDay * excavationTravelTime) / 480);
+            const excavationTrucks = excavationLoadsPerDay && excavationTravelTime ? Math.ceil((excavationLoadsPerDay * excavationTravelTime) / 480) : 0;
             const excavationTruckHours = excavationTrucks * excavationDays * 8;
 
             // DGA calculations
-            const dgaVolume = roundUp(dgaArea * dgaDepth / 324, 1);
-            const dgaTons = roundUp(dgaVolume * 1.9, 1);
-            const dgaDays = Math.ceil(dgaVolume / dgaRate * 2) / 2;
-            const dgaDailyVolume = dgaVolume / dgaDays;
+            const dgaVolume = dgaArea && dgaDepth ? roundUp(dgaArea * dgaDepth / 324, 1) : 0;
+            const dgaTons = dgaVolume > 0 ? roundUp(dgaVolume * 1.9, 1) : 0;
+            const dgaDays = dgaVolume && dgaRate ? Math.ceil(dgaVolume / dgaRate * 2) / 2 : 0;
+            const dgaDailyVolume = dgaDays > 0 ? dgaVolume / dgaDays : 0;
             const dgaLoadsPerDay = dgaDailyVolume / 16; // 16 CY per truck
-            const dgaTrucks = Math.ceil((dgaLoadsPerDay * dgaTravelTime) / 480);
+            const dgaTrucks = dgaLoadsPerDay && dgaTravelTime ? Math.ceil((dgaLoadsPerDay * dgaTravelTime) / 480) : 0;
             const dgaTruckHours = dgaTrucks * dgaDays * 8;
 
             // Milling calculations
-            const millingTons = roundUp(millingArea * millingDepth * 0.0575, 1);
-            const millingDays = Math.ceil(millingArea / millingRate * 2) / 2;
-            const millingDailyTons = millingTons / millingDays;
+            const millingTons = millingArea && millingDepth ? roundUp(millingArea * millingDepth * 0.0575, 1) : 0;
+            const millingDays = millingArea && millingRate ? Math.ceil(millingArea / millingRate * 2) / 2 : 0;
+            const millingDailyTons = millingDays > 0 ? millingTons / millingDays : 0;
             const millingLoadsPerDay = millingDailyTons / 22; // 22 tons per truck
-            const millingTrucks = Math.ceil((millingLoadsPerDay * millingTravelTime) / 480);
+            const millingTrucks = millingLoadsPerDay && millingTravelTime ? Math.ceil((millingLoadsPerDay * millingTravelTime) / 480) : 0;
             const millingTruckHours = millingTrucks * millingDays * 8;
 
             // Base calculations
-            const baseTons = roundUp(baseArea * baseDepth * 0.0575, 1);
-            const baseDays = Math.ceil(baseArea / baseRate * 2) / 2;
-            const baseDailyTons = baseTons / baseDays;
+            const baseTons = baseArea && baseDepth ? roundUp(baseArea * baseDepth * 0.0575, 1) : 0;
+            const baseDays = baseArea && baseRate ? Math.ceil(baseArea / baseRate * 2) / 2 : 0;
+            const baseDailyTons = baseDays > 0 ? baseTons / baseDays : 0;
             const baseLoadsPerDay = baseDailyTons / 22; // 22 tons per truck
-            const baseTrucks = Math.ceil((baseLoadsPerDay * baseTravelTime) / 480);
+            const baseTrucks = baseLoadsPerDay && baseTravelTime ? Math.ceil((baseLoadsPerDay * baseTravelTime) / 480) : 0;
             const baseTruckHours = baseTrucks * baseDays * 8;
 
             // Surface calculations
-            const surfaceTons = roundUp(surfaceArea * surfaceDepth * 0.0575, 1);
-            const surfaceDays = Math.ceil(surfaceArea / surfaceRate * 2) / 2;
-            const surfaceDailyTons = surfaceTons / surfaceDays;
+            const surfaceTons = surfaceArea && surfaceDepth ? roundUp(surfaceArea * surfaceDepth * 0.0575, 1) : 0;
+            const surfaceDays = surfaceArea && surfaceRate ? Math.ceil(surfaceArea / surfaceRate * 2) / 2 : 0;
+            const surfaceDailyTons = surfaceDays > 0 ? surfaceTons / surfaceDays : 0;
             const surfaceLoadsPerDay = surfaceDailyTons / 22; // 22 tons per truck
-            const surfaceTrucks = Math.ceil((surfaceLoadsPerDay * surfaceTravelTime) / 480);
+            const surfaceTrucks = surfaceLoadsPerDay && surfaceTravelTime ? Math.ceil((surfaceLoadsPerDay * surfaceTravelTime) / 480) : 0;
             const surfaceTruckHours = surfaceTrucks * surfaceDays * 8;
 
             // Update output displays
