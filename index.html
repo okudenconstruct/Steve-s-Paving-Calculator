@@ -82,6 +82,17 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            background-color: #1f2937;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid #374151;
+        }
+
+        .output-section {
+            background-color: #1f2937;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid #374151;
         }
         
         .section-title {
@@ -349,7 +360,7 @@
 
         <div class="grid">
             <!-- Excavation Output -->
-            <div>
+            <div class="output-section">
                 <h3 class="section-title text-red">Excavation Output</h3>
                 <p>Volume: <span id="excavationVolume">0</span> CY</p>
                 <p>Days: <span id="excavationDays">0</span></p>
@@ -358,14 +369,14 @@
             </div>
 
             <!-- Fine Grading Output -->
-            <div>
+            <div class="output-section">
                 <h3 class="section-title text-purple" style="color: #a855f7;">Fine Grading/Compacting Output</h3>
                 <p>Days: <span id="fineGradingDays">0</span></p>
                 <small style="color: #9ca3af; font-size: 0.75rem;">No trucking calculations - equipment managed in Heavybid</small>
             </div>
 
             <!-- DGA Output -->
-            <div>
+            <div class="output-section">
                 <h3 class="section-title text-yellow">DGA Output</h3>
                 <p>Volume: <span id="dgaVolume">0</span> CY</p>
                 <p>Tons: <span id="dgaTons">0</span></p>
@@ -375,7 +386,7 @@
             </div>
 
             <!-- Milling Output -->
-            <div>
+            <div class="output-section">
                 <h3 class="section-title text-pink">Milling Output</h3>
                 <p>Tons: <span id="millingTons">0</span></p>
                 <p>Days: <span id="millingDays">0</span></p>
@@ -384,7 +395,7 @@
             </div>
 
             <!-- Base Output -->
-            <div>
+            <div class="output-section">
                 <h3 class="section-title text-blue">19mm64 Base Output</h3>
                 <p>Tons: <span id="baseTons">0</span></p>
                 <p>Days: <span id="baseDays">0</span></p>
@@ -393,7 +404,7 @@
             </div>
 
             <!-- Surface Output -->
-            <div>
+            <div class="output-section">
                 <h3 class="section-title text-green">9.5mm64 Surface Output</h3>
                 <p>Tons: <span id="surfaceTons">0</span></p>
                 <p>Days: <span id="surfaceDays">0</span></p>
