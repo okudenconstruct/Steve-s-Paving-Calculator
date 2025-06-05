@@ -74,7 +74,7 @@
         
         @media (min-width: 768px) {
             .grid {
-                grid-template-columns: repeat(5, 1fr);
+                grid-template-columns: repeat(6, 1fr);
             }
         }
         
@@ -516,6 +516,12 @@
                         <td>0.75-0.85×</td>
                     </tr>
                     <tr>
+                        <td>Fine Grading/Compacting</td>
+                        <td>4000-8000 SY/day</td>
+                        <td>2000-5000 SY/day</td>
+                        <td>0.50-0.75×</td>
+                    </tr>
+                    <tr>
                         <td>DGA Placement</td>
                         <td>350-700 CY/day</td>
                         <td>250-550 CY/day</td>
@@ -643,6 +649,8 @@
             document.getElementById('excavationTruckHours').textContent = excavationTruckHours;
             document.getElementById('excavationTrucks').textContent = excavationTrucks;
 
+            document.getElementById('fineGradingDays').textContent = fineGradingDays;
+
             document.getElementById('dgaVolume').textContent = dgaVolume;
             document.getElementById('dgaTons').textContent = dgaTons;
             document.getElementById('dgaDays').textContent = dgaDays;
@@ -675,7 +683,7 @@
             selects.forEach(select => select.selectedIndex = 0);
             
             // Reset all output displays
-            const outputs = document.querySelectorAll('#excavationVolume, #excavationDays, #excavationTruckHours, #excavationTrucks, #dgaVolume, #dgaTons, #dgaDays, #dgaTruckHours, #dgaTrucks, #millingTons, #millingDays, #millingTruckHours, #millingTrucks, #baseTons, #baseDays, #baseTruckHours, #baseTrucks, #surfaceTons, #surfaceDays, #surfaceTruckHours, #surfaceTrucks');
+            const outputs = document.querySelectorAll('#excavationVolume, #excavationDays, #excavationTruckHours, #excavationTrucks, #fineGradingDays, #dgaVolume, #dgaTons, #dgaDays, #dgaTruckHours, #dgaTrucks, #millingTons, #millingDays, #millingTruckHours, #millingTrucks, #baseTons, #baseDays, #baseTruckHours, #baseTrucks, #surfaceTons, #surfaceDays, #surfaceTruckHours, #surfaceTrucks');
             outputs.forEach(output => output.textContent = '0');
         }
     </script>
