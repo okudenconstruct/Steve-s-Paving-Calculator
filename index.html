@@ -210,6 +210,25 @@
                 </select>
             </div>
 
+            <!-- Fine Grading Input -->
+            <div class="input-section">
+                <h3 class="section-title text-purple" style="color: #a855f7;">Fine Grading/Compacting Input</h3>
+                <label>Area (SY)</label>
+                <input type="number" id="fineGradingArea" placeholder="Enter area in SY">
+                <small style="color: #9ca3af; font-size: 0.75rem; display: block; margin-bottom: 0.25rem;">Subgrade preparation between excavation and DGA placement</small>
+                <label>SY/day</label>
+                <select id="fineGradingRate">
+                    <option value="0">--Select Fine Grading Rate--</option>
+                    <option value="2000">2000</option>
+                    <option value="2500">2500</option>
+                    <option value="3000">3000</option>
+                    <option value="3500">3500</option>
+                    <option value="4000">4000</option>
+                    <option value="4500">4500</option>
+                    <option value="5000">5000</option>
+                </select>
+            </div>
+
             <!-- DGA Input -->
             <div class="input-section">
                 <h3 class="section-title text-yellow">DGA Input</h3>
@@ -336,6 +355,13 @@
                 <p>Days: <span id="excavationDays">0</span></p>
                 <p>Truck Hours: <span id="excavationTruckHours">0</span></p>
                 <p>Trucks Required: <span id="excavationTrucks">0</span></p>
+            </div>
+
+            <!-- Fine Grading Output -->
+            <div>
+                <h3 class="section-title text-purple" style="color: #a855f7;">Fine Grading/Compacting Output</h3>
+                <p>Days: <span id="fineGradingDays">0</span></p>
+                <small style="color: #9ca3af; font-size: 0.75rem;">No trucking calculations - equipment managed in Heavybid</small>
             </div>
 
             <!-- DGA Output -->
@@ -546,8 +572,9 @@
             const excavationTravelTime = parseFloat(document.getElementById('excavationTravelTime').value) || 0;
             const excavationRate = parseFloat(document.getElementById('excavationRate').value) || 0;
 
+            const fineGradingArea = parseFloat(document.getElementById('fineGradingArea').value) || 0;
+            const fineGradingRate = parseFloat(document.getElementById('fineGradingRate').value) || 0;
             const dgaArea = parseFloat(document.getElementById('dgaArea').value) || 0;
-            const dgaDepth = parseFloat(document.getElementById('dgaDepth').value) || 0;
             const dgaTravelTime = parseFloat(document.getElementById('dgaTravelTime').value) || 0;
             const dgaRate = parseFloat(document.getElementById('dgaRate').value) || 0;
 
@@ -573,6 +600,9 @@
             const excavationLoadsPerDay = excavationDailyVolume / 16; // 16 CY per truck
             const excavationTrucks = excavationLoadsPerDay && excavationTravelTime ? Math.ceil((excavationLoadsPerDay * excavationTravelTime) / 480) : 0;
             const excavationTruckHours = excavationTrucks * excavationDays * 8;
+
+            // Fine Grading calculations
+            const fineGradingDays = fineGradingArea && fineGradingRate ? Math.ceil(fineGradingArea / fineGradingRate * 2) / 2 : 0;
 
             // DGA calculations
             const dgaVolume = dgaArea && dgaDepth ? roundUp(dgaArea * dgaDepth / 324, 1) : 0;
