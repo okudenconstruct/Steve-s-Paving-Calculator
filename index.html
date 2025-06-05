@@ -403,9 +403,14 @@
                         <td>1.9 tons/CY density</td>
                     </tr>
                     <tr>
+                        <td>Milling Tons</td>
+                        <td>(Area in SY × Depth in inches × 130) ÷ 324 ÷ 2000</td>
+                        <td>130 lbs/ft³ RAP density (FHWA standard)</td>
+                    </tr>
+                    <tr>
                         <td>Asphalt Tons</td>
                         <td>Area in SY × Depth in inches × 0.0575</td>
-                        <td>All asphalt materials</td>
+                        <td>Fresh asphalt placement (base/surface)</td>
                     </tr>
                 </table>
 
@@ -579,7 +584,7 @@
             const dgaTruckHours = dgaTrucks * dgaDays * 8;
 
             // Milling calculations
-            const millingTons = millingArea && millingDepth ? roundUp(millingArea * millingDepth * 0.0575, 1) : 0;
+            const millingTons = millingArea && millingDepth ? roundUp(millingArea * millingDepth * 0.0494, 1) : 0;
             const millingDays = millingArea && millingRate ? Math.ceil(millingArea / millingRate * 2) / 2 : 0;
             const millingDailyTons = millingDays > 0 ? millingTons / millingDays : 0;
             const millingLoadsPerDay = millingDailyTons / 22; // 22 tons per truck
