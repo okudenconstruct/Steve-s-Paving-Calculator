@@ -431,6 +431,11 @@
                         <td>324 = conversion factor</td>
                     </tr>
                     <tr>
+                        <td>Excavation Tons</td>
+                        <td>Volume in CY × 1.5</td>
+                        <td>1.5 tons/CY typical soil density</td>
+                    </tr>
+                    <tr>
                         <td>DGA Volume</td>
                         <td>(Area in SY × Depth in inches) ÷ 324</td>
                         <td>Same as excavation</td>
@@ -660,6 +665,7 @@
 
             // Update output displays
             document.getElementById('excavationVolume').textContent = excavationVolume;
+            document.getElementById('excavationTons').textContent = excavationTons;
             document.getElementById('excavationDays').textContent = excavationDays;
             document.getElementById('excavationTruckHours').textContent = excavationTruckHours;
             document.getElementById('excavationTrucks').textContent = excavationTrucks;
@@ -698,7 +704,7 @@
             selects.forEach(select => select.selectedIndex = 0);
             
             // Reset all output displays
-            const outputs = document.querySelectorAll('#excavationVolume, #excavationDays, #excavationTruckHours, #excavationTrucks, #fineGradingDays, #dgaVolume, #dgaTons, #dgaDays, #dgaTruckHours, #dgaTrucks, #millingTons, #millingDays, #millingTruckHours, #millingTrucks, #baseTons, #baseDays, #baseTruckHours, #baseTrucks, #surfaceTons, #surfaceDays, #surfaceTruckHours, #surfaceTrucks');
+            const outputs = document.querySelectorAll('#excavationVolume, #excavationTons, #excavationDays, #excavationTruckHours, #excavationTrucks, #fineGradingDays, #dgaVolume, #dgaTons, #dgaDays, #dgaTruckHours, #dgaTrucks, #millingTons, #millingDays, #millingTruckHours, #millingTrucks, #baseTons, #baseDays, #baseTruckHours, #baseTrucks, #surfaceTons, #surfaceDays, #surfaceTruckHours, #surfaceTrucks');
             outputs.forEach(output => output.textContent = '0');
         }
     </script>
