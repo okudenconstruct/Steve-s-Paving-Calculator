@@ -363,6 +363,7 @@
             <div class="output-section">
                 <h3 class="section-title text-red">Excavation Output</h3>
                 <p>Volume: <span id="excavationVolume">0</span> CY</p>
+                <p>Tons: <span id="excavationTons">0</span></p>
                 <p>Days: <span id="excavationDays">0</span></p>
                 <p>Truck Hours: <span id="excavationTruckHours">0</span></p>
                 <p>Trucks Required: <span id="excavationTrucks">0</span></p>
@@ -591,7 +592,9 @@
 
             const fineGradingArea = parseFloat(document.getElementById('fineGradingArea').value) || 0;
             const fineGradingRate = parseFloat(document.getElementById('fineGradingRate').value) || 0;
+
             const dgaArea = parseFloat(document.getElementById('dgaArea').value) || 0;
+            const dgaDepth = parseFloat(document.getElementById('dgaDepth').value) || 0;
             const dgaTravelTime = parseFloat(document.getElementById('dgaTravelTime').value) || 0;
             const dgaRate = parseFloat(document.getElementById('dgaRate').value) || 0;
 
@@ -612,6 +615,7 @@
 
             // Excavation calculations
             const excavationVolume = excavationArea && excavationDepth ? roundUp(excavationArea * excavationDepth / 324, 1) : 0;
+            const excavationTons = excavationVolume > 0 ? roundUp(excavationVolume * 1.5, 1) : 0;
             const excavationDays = excavationVolume && excavationRate ? Math.ceil(excavationVolume / excavationRate * 2) / 2 : 0;
             const excavationDailyVolume = excavationDays > 0 ? excavationVolume / excavationDays : 0;
             const excavationLoadsPerDay = excavationDailyVolume / 16; // 16 CY per truck
