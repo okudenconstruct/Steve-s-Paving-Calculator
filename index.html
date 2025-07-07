@@ -613,4 +613,114 @@
             const excavationRate = parseFloat(document.getElementById('excavationRate').value) || 0;
 
             const fineGradingArea = parseFloat(document.getElementById('fineGradingArea').value) || 0;
-            const fine
+            const fineGradingRate = parseFloat(document.getElementById('fineGradingRate').value) || 0;
+
+            const dgaArea = parseFloat(document.getElementById('dgaArea').value) || 0;
+            const dgaDepth = parseFloat(document.getElementById('dgaDepth').value) || 0;
+            const dgaTravelTime = parseFloat(document.getElementById('dgaTravelTime').value) || 0;
+            const dgaRate = parseFloat(document.getElementById('dgaRate').value) || 0;
+
+            const millingArea = parseFloat(document.getElementById('millingArea').value) || 0;
+            const millingDepth = parseFloat(document.getElementById('millingDepth').value) || 0;
+            const millingTravelTime = parseFloat(document.getElementById('millingTravelTime').value) || 0;
+            const millingRate = parseFloat(document.getElementById('millingRate').value) || 0;
+
+            const baseArea = parseFloat(document.getElementById('baseArea').value) || 0;
+            const baseDepth = parseFloat(document.getElementById('baseDepth').value) || 0;
+            const baseTravelTime = parseFloat(document.getElementById('baseTravelTime').value) || 0;
+            const baseRate = parseFloat(document.getElementById('baseRate').value) || 0;
+
+            const surfaceArea = parseFloat(document.getElementById('surfaceArea').value) || 0;
+            const surfaceDepth = parseFloat(document.getElementById('surfaceDepth').value) || 0;
+            const surfaceTravelTime = parseFloat(document.getElementById('surfaceTravelTime').value) || 0;
+            const surfaceRate = parseFloat(document.getElementById('surfaceRate').value) || 0;
+
+            // Excavation calculations
+            const excavationVolume = excavationArea && excavationDepth ? roundUp(excavationArea * excavationDepth / 324, 1) : 0;
+            const excavationTons = excavationVolume > 0 ? roundUp(excavationVolume * 1.5, 1) : 0;
+            const excavationDays = excavationVolume && excavationRate ? Math.ceil(excavationVolume / excavationRate * 2) / 2 : 0;
+            const excavationDailyVolume = excavationDays > 0 ? excavationVolume / excavationDays : 0;
+            const excavationLoadsPerDay = excavationDailyVolume / 16; // 16 CY per truck
+            const excavationTrucks = excavationLoadsPerDay && excavationTravelTime ? Math.ceil((excavationLoadsPerDay * excavationTravelTime) / 480) : 0;
+            const excavationTruckHours = excavationTrucks * excavationDays * 8;
+
+            // Fine Grading calculations
+            const fineGradingDays = fineGradingArea && fineGradingRate ? Math.ceil(fineGradingArea / fineGradingRate * 2) / 2 : 0;
+
+            // DGA calculations
+            const dgaVolume = dgaArea && dgaDepth ? roundUp(dgaArea * dgaDepth / 324, 1) : 0;
+            const dgaTons = dgaVolume > 0 ? roundUp(dgaVolume * 1.9, 1) : 0;
+            const dgaDays = dgaVolume && dgaRate ? Math.ceil(dgaVolume / dgaRate * 2) / 2 : 0;
+            const dgaDailyVolume = dgaDays > 0 ? dgaVolume / dgaDays : 0;
+            const dgaLoadsPerDay = dgaDailyVolume / 16; // 16 CY per truck
+            const dgaTrucks = dgaLoadsPerDay && dgaTravelTime ? Math.ceil((dgaLoadsPerDay * dgaTravelTime) / 480) : 0;
+            const dgaTruckHours = dgaTrucks * dgaDays * 8;
+
+            // Milling calculations
+            const millingTons = millingArea && millingDepth ? roundUp(millingArea * millingDepth * 0.0494, 1) : 0;
+            const millingDays = millingArea && millingRate ? Math.ceil(millingArea / millingRate * 2) / 2 : 0;
+            const millingDailyTons = millingDays > 0 ? millingTons / millingDays : 0;
+            const millingLoadsPerDay = millingDailyTons / 22; // 22 tons per truck
+            const millingTrucks = millingLoadsPerDay && millingTravelTime ? Math.ceil((millingLoadsPerDay * millingTravelTime) / 480) : 0;
+            const millingTruckHours = millingTrucks * millingDays * 8;
+
+            // Base calculations - keeping original 0.0575 factor
+            const baseTons = baseArea && baseDepth ? roundUp(baseArea * baseDepth * 0.0575, 1) : 0;
+            const baseDays = baseArea && baseRate ? Math.ceil(baseArea / baseRate * 2) / 2 : 0;
+            const baseDailyTons = baseDays > 0 ? baseTons / baseDays : 0;
+            const baseLoadsPerDay = baseDailyTons / 22; // 22 tons per truck
+            const baseTrucks = baseLoadsPerDay && baseTravelTime ? Math.ceil((baseLoadsPerDay * baseTravelTime) / 480) : 0;
+            const baseTruckHours = baseTrucks * baseDays * 8;
+
+            // Surface calculations - UPDATED to use HeavyBid calibrated factor
+            const surfaceTons = surfaceArea && surfaceDepth ? roundUp(surfaceArea * surfaceDepth * 0.08271, 1) : 0;
+            const surfaceDays = surfaceArea && surfaceRate ? Math.ceil(surfaceArea / surfaceRate * 2) / 2 : 0;
+            const surfaceDailyTons = surfaceDays > 0 ? surfaceTons / surfaceDays : 0;
+            const surfaceLoadsPerDay = surfaceDailyTons / 22; // 22 tons per truck
+            const surfaceTrucks = surfaceLoadsPerDay && surfaceTravelTime ? Math.ceil((surfaceLoadsPerDay * surfaceTravelTime) / 480) : 0;
+            const surfaceTruckHours = surfaceTrucks * surfaceDays * 8;
+
+            // Update output displays
+            document.getElementById('excavationVolume').textContent = excavationVolume;
+            document.getElementById('excavationTons').textContent = excavationTons;
+            document.getElementById('excavationDays').textContent = excavationDays;
+            document.getElementById('excavationTruckHours').textContent = excavationTruckHours;
+            document.getElementById('excavationTrucks').textContent = excavationTrucks;
+
+            document.getElementById('fineGradingDays').textContent = fineGradingDays;
+
+            document.getElementById('dgaVolume').textContent = dgaVolume;
+            document.getElementById('dgaTons').textContent = dgaTons;
+            document.getElementById('dgaDays').textContent = dgaDays;
+            document.getElementById('dgaTruckHours').textContent = dgaTruckHours;
+            document.getElementById('dgaTrucks').textContent = dgaTrucks;
+
+            document.getElementById('millingTons').textContent = millingTons;
+            document.getElementById('millingDays').textContent = millingDays;
+            document.getElementById('millingTruckHours').textContent = millingTruckHours;
+            document.getElementById('millingTrucks').textContent = millingTrucks;
+
+            document.getElementById('baseTons').textContent = baseTons;
+            document.getElementById('baseDays').textContent = baseDays;
+            document.getElementById('baseTruckHours').textContent = baseTruckHours;
+            document.getElementById('baseTrucks').textContent = baseTrucks;
+
+            document.getElementById('surfaceTons').textContent = surfaceTons;
+            document.getElementById('surfaceDays').textContent = surfaceDays;
+            document.getElementById('surfaceTruckHours').textContent = surfaceTruckHours;
+            document.getElementById('surfaceTrucks').textContent = surfaceTrucks;
+        }
+
+        function resetForm() {
+            // Reset all input fields
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => input.value = '');
+            
+            // Reset all select dropdowns
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => select.selectedIndex = 0);
+            
+            // Reset all output displays
+            const outputs = document.querySelectorAll('#excavationVolume, #excavationTons, #excavationDays, #excavationTruckHours, #excavationTrucks, #fineGradingDays, #dgaVolume, #dgaTons, #dgaDays, #dgaTruckHours, #dgaTrucks, #millingTons, #millingDays, #millingTruckHours, #millingTrucks, #baseTons, #baseDays, #baseTruckHours, #baseTrucks, #surfaceTons, #surfaceDays, #surfaceTruckHours, #surfaceTrucks');
+            outputs.forEach(output => output.textContent = '0');
+        }
