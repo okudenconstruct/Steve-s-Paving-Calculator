@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steve's Paving Calculator - HeavyBid Calibrated</title>
+    <title>Steve's Paving Calculator</title>
     <style>
         * {
             margin: 0;
@@ -63,14 +63,6 @@
             font-weight: 700;
             margin: 0.5rem 0 1.5rem 0;
             text-decoration: underline;
-        }
-        
-        .subtitle {
-            text-align: center;
-            font-size: 0.9rem;
-            color: #60a5fa;
-            margin-bottom: 1.5rem;
-            font-style: italic;
         }
         
         .grid {
@@ -143,32 +135,148 @@
             margin-bottom: 0.25rem;
             font-size: 0.875rem;
         }
+        
+        .reference {
+            background-color: #1f2937;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .reference h3 {
+            text-decoration: underline;
+            margin-bottom: 0.5rem;
+        }
+        
+        .reference h4 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .reference table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        
+        .reference table tr {
+            border-bottom: 1px solid #4b5563;
+        }
+        
+        .reference table tr:first-child {
+            border-bottom: 1px solid #374151;
+        }
+        
+        .reference table td {
+            padding: 0.25rem;
+            vertical-align: top;
+        }
+        
+        .reference table tr:first-child td {
+            font-weight: 600;
+        }
+        
+        .reference ul {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+        }
+        
+        .reference li {
+            margin-bottom: 0.25rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="button-group">
-            <button class="btn btn-primary" onclick="calculate()">Calculate</button>
+            <button class="btn btn-primary" onclick="calculateOutput()">Calculate</button>
             <button class="btn btn-danger" onclick="resetForm()">Reset Form</button>
         </div>
 
         <div class="title">Steve's Paving Calculator</div>
-        <div class="subtitle">Calibrated to Match HeavyBid Professional Estimating Software</div>
 
         <div class="grid">
-            <!-- Surface Input -->
+            <!-- Excavation Input -->
             <div class="input-section">
-                <h3 class="section-title text-green">9.5mm64 Surface Input</h3>
+                <h3 class="section-title text-red">Excavation Input</h3>
                 <label>Area (SY)</label>
-                <input type="number" id="surfaceArea" placeholder="Enter area in SY">
+                <input type="number" id="excavationArea" placeholder="Enter area in SY">
                 <label>Depth (in)</label>
-                <input type="number" id="surfaceDepth" placeholder="Enter depth in inches">
+                <input type="number" id="excavationDepth" placeholder="Enter depth in inches">
                 <label>Complete Cycle Time (min)</label>
                 <small style="color: #9ca3af; font-size: 0.75rem; display: block; margin-bottom: 0.25rem;">Include travel both ways plus loading/unloading time</small>
-                <input type="number" id="surfaceTravelTime" placeholder="Enter total cycle time">
+                <input type="number" id="excavationTravelTime" placeholder="Enter total cycle time">
+                <label>CY/day</label>
+                <select id="excavationRate">
+                    <option value="0">--Select Excavation Rate--</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                    <option value="400">400</option>
+                    <option value="500">500</option>
+                    <option value="600">600</option>
+                    <option value="700">700</option>
+                    <option value="800">800</option>
+                </select>
+            </div>
+
+            <!-- Fine Grading Input -->
+            <div class="input-section">
+                <h3 class="section-title text-purple" style="color: #a855f7;">Fine Grading/Compacting Input</h3>
+                <label>Area (SY)</label>
+                <input type="number" id="fineGradingArea" placeholder="Enter area in SY">
+                <small style="color: #9ca3af; font-size: 0.75rem; display: block; margin-bottom: 0.25rem;">Subgrade preparation between excavation and DGA placement</small>
                 <label>SY/day</label>
-                <select id="surfaceRate">
-                    <option value="0">--Select Surface Rate--</option>
+                <select id="fineGradingRate">
+                    <option value="0">--Select Fine Grading Rate--</option>
+                    <option value="2000">2000</option>
+                    <option value="2500">2500</option>
+                    <option value="3000">3000</option>
+                    <option value="3500">3500</option>
+                    <option value="4000">4000</option>
+                    <option value="4500">4500</option>
+                    <option value="5000">5000</option>
+                </select>
+            </div>
+
+            <!-- DGA Input -->
+            <div class="input-section">
+                <h3 class="section-title text-yellow">DGA Input</h3>
+                <label>Area (SY)</label>
+                <input type="number" id="dgaArea" placeholder="Enter area in SY">
+                <label>Depth (in)</label>
+                <input type="number" id="dgaDepth" placeholder="Enter depth in inches">
+                <label>Complete Cycle Time (min)</label>
+                <small style="color: #9ca3af; font-size: 0.75rem; display: block; margin-bottom: 0.25rem;">Include travel both ways plus loading/unloading time</small>
+                <input type="number" id="dgaTravelTime" placeholder="Enter total cycle time">
+                <label>CY/day</label>
+                <select id="dgaRate">
+                    <option value="0">--Select DGA Rate--</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                    <option value="400">400</option>
+                    <option value="500">500</option>
+                    <option value="600">600</option>
+                    <option value="700">700</option>
+                    <option value="800">800</option>
+                </select>
+            </div>
+
+            <!-- Milling Input -->
+            <div class="input-section">
+                <h3 class="section-title text-pink">Milling Input</h3>
+                <label>Area (SY)</label>
+                <input type="number" id="millingArea" placeholder="Enter area in SY">
+                <label>Depth (in)</label>
+                <input type="number" id="millingDepth" placeholder="Enter depth in inches">
+                <label>Complete Cycle Time (min)</label>
+                <small style="color: #9ca3af; font-size: 0.75rem; display: block; margin-bottom: 0.25rem;">Include travel both ways plus loading/unloading time</small>
+                <input type="number" id="millingTravelTime" placeholder="Enter total cycle time">
+                <label>SY/day</label>
+                <select id="millingRate">
+                    <option value="0">--Select Milling Rate--</option>
                     <option value="1000">1000</option>
                     <option value="1500">1500</option>
                     <option value="2000">2000</option>
@@ -218,19 +326,19 @@
                 </select>
             </div>
 
-            <!-- Milling Input -->
+            <!-- Surface Input -->
             <div class="input-section">
-                <h3 class="section-title text-pink">Milling Input</h3>
+                <h3 class="section-title text-green">9.5mm64 Surface Input</h3>
                 <label>Area (SY)</label>
-                <input type="number" id="millingArea" placeholder="Enter area in SY">
+                <input type="number" id="surfaceArea" placeholder="Enter area in SY">
                 <label>Depth (in)</label>
-                <input type="number" id="millingDepth" placeholder="Enter depth in inches">
+                <input type="number" id="surfaceDepth" placeholder="Enter depth in inches">
                 <label>Complete Cycle Time (min)</label>
                 <small style="color: #9ca3af; font-size: 0.75rem; display: block; margin-bottom: 0.25rem;">Include travel both ways plus loading/unloading time</small>
-                <input type="number" id="millingTravelTime" placeholder="Enter total cycle time">
+                <input type="number" id="surfaceTravelTime" placeholder="Enter total cycle time">
                 <label>SY/day</label>
-                <select id="millingRate">
-                    <option value="0">--Select Milling Rate--</option>
+                <select id="surfaceRate">
+                    <option value="0">--Select Surface Rate--</option>
                     <option value="1000">1000</option>
                     <option value="1500">1500</option>
                     <option value="2000">2000</option>
@@ -248,101 +356,24 @@
                     <option value="8000">8000</option>
                 </select>
             </div>
-
-            <!-- DGA Input -->
-            <div class="input-section">
-                <h3 class="section-title text-yellow">DGA Input</h3>
-                <label>Area (SY)</label>
-                <input type="number" id="dgaArea" placeholder="Enter area in SY">
-                <label>Depth (in)</label>
-                <input type="number" id="dgaDepth" placeholder="Enter depth in inches">
-                <label>Complete Cycle Time (min)</label>
-                <small style="color: #9ca3af; font-size: 0.75rem; display: block; margin-bottom: 0.25rem;">Include travel both ways plus loading/unloading time</small>
-                <input type="number" id="dgaTravelTime" placeholder="Enter total cycle time">
-                <label>CY/day</label>
-                <select id="dgaRate">
-                    <option value="0">--Select DGA Rate--</option>
-                    <option value="100">100</option>
-                    <option value="200">200</option>
-                    <option value="300">300</option>
-                    <option value="400">400</option>
-                    <option value="500">500</option>
-                    <option value="600">600</option>
-                    <option value="700">700</option>
-                    <option value="800">800</option>
-                </select>
-            </div>
-
-            <!-- Fine Grading Input -->
-            <div class="input-section">
-                <h3 class="section-title text-purple" style="color: #a855f7;">Fine Grading/Compacting Input</h3>
-                <label>Area (SY)</label>
-                <input type="number" id="fineGradingArea" placeholder="Enter area in SY">
-                <small style="color: #9ca3af; font-size: 0.75rem; display: block; margin-bottom: 0.25rem;">Subgrade preparation between excavation and DGA placement</small>
-                <label>SY/day</label>
-                <select id="fineGradingRate">
-                    <option value="0">--Select Fine Grading Rate--</option>
-                    <option value="2000">2000</option>
-                    <option value="2500">2500</option>
-                    <option value="3000">3000</option>
-                    <option value="3500">3500</option>
-                    <option value="4000">4000</option>
-                    <option value="4500">4500</option>
-                    <option value="5000">5000</option>
-                </select>
-            </div>
-
-            <!-- Excavation Input -->
-            <div class="input-section">
-                <h3 class="section-title text-red">Excavation Input</h3>
-                <label>Area (SY)</label>
-                <input type="number" id="excavationArea" placeholder="Enter area in SY">
-                <label>Depth (in)</label>
-                <input type="number" id="excavationDepth" placeholder="Enter depth in inches">
-                <label>Complete Cycle Time (min)</label>
-                <small style="color: #9ca3af; font-size: 0.75rem; display: block; margin-bottom: 0.25rem;">Include travel both ways plus loading/unloading time</small>
-                <input type="number" id="excavationTravelTime" placeholder="Enter total cycle time">
-                <label>CY/day</label>
-                <select id="excavationRate">
-                    <option value="0">--Select Excavation Rate--</option>
-                    <option value="100">100</option>
-                    <option value="200">200</option>
-                    <option value="300">300</option>
-                    <option value="400">400</option>
-                    <option value="500">500</option>
-                    <option value="600">600</option>
-                    <option value="700">700</option>
-                    <option value="800">800</option>
-                </select>
-            </div>
         </div>
 
         <div class="grid">
-            <!-- Surface Output -->
+            <!-- Excavation Output -->
             <div class="output-section">
-                <h3 class="section-title text-green">9.5mm64 Surface Output</h3>
-                <p>Tons: <span id="surfaceTons">0</span></p>
-                <p>Days: <span id="surfaceDays">0</span></p>
-                <p>Truck Hours: <span id="surfaceTruckHours">0</span></p>
-                <p>Trucks Required: <span id="surfaceTrucks">0</span></p>
+                <h3 class="section-title text-red">Excavation Output</h3>
+                <p>Volume: <span id="excavationVolume">0</span> CY</p>
+                <p>Tons: <span id="excavationTons">0</span></p>
+                <p>Days: <span id="excavationDays">0</span></p>
+                <p>Truck Hours: <span id="excavationTruckHours">0</span></p>
+                <p>Trucks Required: <span id="excavationTrucks">0</span></p>
             </div>
 
-            <!-- Base Output -->
+            <!-- Fine Grading Output -->
             <div class="output-section">
-                <h3 class="section-title text-blue">19mm64 Base Output</h3>
-                <p>Tons: <span id="baseTons">0</span></p>
-                <p>Days: <span id="baseDays">0</span></p>
-                <p>Truck Hours: <span id="baseTruckHours">0</span></p>
-                <p>Trucks Required: <span id="baseTrucks">0</span></p>
-            </div>
-
-            <!-- Milling Output -->
-            <div class="output-section">
-                <h3 class="section-title text-pink">Milling Output</h3>
-                <p>Tons: <span id="millingTons">0</span></p>
-                <p>Days: <span id="millingDays">0</span></p>
-                <p>Truck Hours: <span id="millingTruckHours">0</span></p>
-                <p>Trucks Required: <span id="millingTrucks">0</span></p>
+                <h3 class="section-title text-purple" style="color: #a855f7;">Fine Grading/Compacting Output</h3>
+                <p>Days: <span id="fineGradingDays">0</span></p>
+                <small style="color: #9ca3af; font-size: 0.75rem;">No trucking calculations - equipment managed in Heavybid</small>
             </div>
 
             <!-- DGA Output -->
@@ -355,21 +386,199 @@
                 <p>Trucks Required: <span id="dgaTrucks">0</span></p>
             </div>
 
-            <!-- Fine Grading Output -->
+            <!-- Milling Output -->
             <div class="output-section">
-                <h3 class="section-title text-purple" style="color: #a855f7;">Fine Grading/Compacting Output</h3>
-                <p>Days: <span id="fineGradingDays">0</span></p>
-                <small style="color: #9ca3af; font-size: 0.75rem;">No trucking calculations - equipment managed in Heavybid</small>
+                <h3 class="section-title text-pink">Milling Output</h3>
+                <p>Tons: <span id="millingTons">0</span></p>
+                <p>Days: <span id="millingDays">0</span></p>
+                <p>Truck Hours: <span id="millingTruckHours">0</span></p>
+                <p>Trucks Required: <span id="millingTrucks">0</span></p>
             </div>
 
-            <!-- Excavation Output -->
+            <!-- Base Output -->
             <div class="output-section">
-                <h3 class="section-title text-red">Excavation Output</h3>
-                <p>Volume: <span id="excavationVolume">0</span> CY</p>
-                <p>Tons: <span id="excavationTons">0</span></p>
-                <p>Days: <span id="excavationDays">0</span></p>
-                <p>Truck Hours: <span id="excavationTruckHours">0</span></p>
-                <p>Trucks Required: <span id="excavationTrucks">0</span></p>
+                <h3 class="section-title text-blue">19mm64 Base Output</h3>
+                <p>Tons: <span id="baseTons">0</span></p>
+                <p>Days: <span id="baseDays">0</span></p>
+                <p>Truck Hours: <span id="baseTruckHours">0</span></p>
+                <p>Trucks Required: <span id="baseTrucks">0</span></p>
+            </div>
+
+            <!-- Surface Output -->
+            <div class="output-section">
+                <h3 class="section-title text-green">9.5mm64 Surface Output</h3>
+                <p>Tons: <span id="surfaceTons">0</span></p>
+                <p>Days: <span id="surfaceDays">0</span></p>
+                <p>Truck Hours: <span id="surfaceTruckHours">0</span></p>
+                <p>Trucks Required: <span id="surfaceTrucks">0</span></p>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;">
+            <div class="reference">
+                <h3>Reference Calculations</h3>
+                
+                <h4>Volume & Tonnage Calculations:</h4>
+                <table>
+                    <tr>
+                        <td>Material</td>
+                        <td>Formula</td>
+                        <td>Notes</td>
+                    </tr>
+                    <tr>
+                        <td>Excavation Volume</td>
+                        <td>(Area in SY × Depth in inches) ÷ 324</td>
+                        <td>324 = conversion factor</td>
+                    </tr>
+                    <tr>
+                        <td>Excavation Tons</td>
+                        <td>Volume in CY × 1.5</td>
+                        <td>1.5 tons/CY typical soil density</td>
+                    </tr>
+                    <tr>
+                        <td>DGA Volume</td>
+                        <td>(Area in SY × Depth in inches) ÷ 324</td>
+                        <td>Same as excavation</td>
+                    </tr>
+                    <tr>
+                        <td>DGA Tons</td>
+                        <td>Volume in CY × 1.9</td>
+                        <td>1.9 tons/CY density</td>
+                    </tr>
+                    <tr>
+                        <td>Milling Tons</td>
+                        <td>(Area in SY × Depth in inches × 130) ÷ 324 ÷ 2000</td>
+                        <td>130 lbs/ft³ RAP density (FHWA standard)</td>
+                    </tr>
+                    <tr>
+                        <td>Asphalt Tons</td>
+                        <td>Area in SY × Depth in inches × 0.0575</td>
+                        <td>Fresh asphalt placement (base/surface)</td>
+                    </tr>
+                </table>
+
+                <h4>Time Calculations:</h4>
+                <table>
+                    <tr>
+                        <td>Activity</td>
+                        <td>Days Formula</td>
+                        <td>Rounding</td>
+                    </tr>
+                    <tr>
+                        <td>All Activities</td>
+                        <td>Volume or Area ÷ Daily Rate</td>
+                        <td>Round up to nearest 0.5 day</td>
+                    </tr>
+                </table>
+
+                <h4>Truck Fleet Calculations:</h4>
+                <table>
+                    <tr>
+                        <td>Step</td>
+                        <td>Formula</td>
+                        <td>Notes</td>
+                    </tr>
+                    <tr>
+                        <td>Daily Loads</td>
+                        <td>Daily Volume ÷ 16 CY/truck (dirt/DGA)</td>
+                        <td>16 CY capacity for volume materials</td>
+                    </tr>
+                    <tr>
+                        <td>Daily Loads</td>
+                        <td>Daily Tons ÷ 22 tons/truck (asphalt)</td>
+                        <td>22 ton capacity for asphalt</td>
+                    </tr>
+                    <tr>
+                        <td>Trucks per Day</td>
+                        <td>(Daily Loads × Cycle Time) ÷ 480 minutes</td>
+                        <td>480 = 8-hour workday</td>
+                    </tr>
+                    <tr>
+                        <td>Total Truck Hours</td>
+                        <td>Trucks per Day × Total Days × 8 hours</td>
+                        <td>Fleet utilization time</td>
+                    </tr>
+                </table>
+
+                <h4>Key Factors:</h4>
+                <ul>
+                    <li>Complete Cycle Time: Total round-trip time including loading (20 min) + unloading (20 min) + travel both ways</li>
+                    <li>324 Factor: 9 sq ft/SY × 36 inches/yard = standard conversion</li>
+                    <li>Continuous Operation: Longer cycle times require more trucks to maintain production</li>
+                </ul>
+            </div>
+
+            <div class="reference">
+                <h3>Production Rate Guidance</h3>
+                
+                <p style="margin-bottom: 1rem; line-height: 1.4;">
+                    The rates below are derived from roadway construction data and modified for parking lot conditions. 
+                    Parking lots typically require 25-45% more time due to obstacles (light poles, curbs, islands), 
+                    frequent equipment repositioning, increased edge work, and manual finishing requirements. 
+                    Use these ranges as starting points and adjust based on project complexity and site conditions.
+                </p>
+
+                <h4>Recommended Production Rates:</h4>
+                <table>
+                    <tr>
+                        <td>Activity</td>
+                        <td>Roadway Rate</td>
+                        <td>Parking Lot Range</td>
+                        <td>Modifier</td>
+                    </tr>
+                    <tr>
+                        <td>Excavation</td>
+                        <td>400-800 CY/day</td>
+                        <td>300-650 CY/day</td>
+                        <td>0.75-0.85×</td>
+                    </tr>
+                    <tr>
+                        <td>Fine Grading/Compacting</td>
+                        <td>4000-8000 SY/day</td>
+                        <td>2000-5000 SY/day</td>
+                        <td>0.50-0.75×</td>
+                    </tr>
+                    <tr>
+                        <td>DGA Placement</td>
+                        <td>350-700 CY/day</td>
+                        <td>250-550 CY/day</td>
+                        <td>0.70-0.80×</td>
+                    </tr>
+                    <tr>
+                        <td>Milling</td>
+                        <td>4000-8000 SY/day</td>
+                        <td>2500-6000 SY/day</td>
+                        <td>0.60-0.75×</td>
+                    </tr>
+                    <tr>
+                        <td>Base Course</td>
+                        <td>3000-7000 SY/day</td>
+                        <td>1800-4500 SY/day</td>
+                        <td>0.55-0.70×</td>
+                    </tr>
+                    <tr>
+                        <td>Surface Course</td>
+                        <td>3500-8000 SY/day</td>
+                        <td>2000-5000 SY/day</td>
+                        <td>0.50-0.65×</td>
+                    </tr>
+                </table>
+
+                <h4>Complexity Classifications:</h4>
+                <ul>
+                    <li><strong>Simple Lots</strong> (0.80-0.85×): Large retail, minimal obstacles, good access</li>
+                    <li><strong>Standard Lots</strong> (0.65-0.75×): Typical commercial, moderate obstacles</li>
+                    <li><strong>Complex Lots</strong> (0.50-0.60×): Dense obstacles, tight spaces, extensive hand work</li>
+                </ul>
+
+                <h4>Key Reduction Factors:</h4>
+                <ul>
+                    <li>Smaller equipment access, utility conflicts</li>
+                    <li>Hand grading around obstacles, edge work</li>
+                    <li>Frequent stops, tight turns, extensive edge cuts</li>
+                    <li>Obstacle navigation, compaction challenges</li>
+                    <li>Quality requirements, hand finishing, joint work</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -379,101 +588,89 @@
             return Math.ceil(val / increment) * increment;
         }
 
-        function calculate() {
-            console.log('Calculate function called!');
-            
-            // Get Surface inputs
-            const surfaceArea = parseFloat(document.getElementById('surfaceArea').value) || 0;
-            const surfaceDepth = parseFloat(document.getElementById('surfaceDepth').value) || 0;
-            const surfaceTravelTime = parseFloat(document.getElementById('surfaceTravelTime').value) || 0;
-            const surfaceRate = parseFloat(document.getElementById('surfaceRate').value) || 0;
-            
-            console.log('Surface Area:', surfaceArea, 'Surface Depth:', surfaceDepth);
+        function calculateOutput() {
+            // Get input values
+            const excavationArea = parseFloat(document.getElementById('excavationArea').value) || 0;
+            const excavationDepth = parseFloat(document.getElementById('excavationDepth').value) || 0;
+            const excavationTravelTime = parseFloat(document.getElementById('excavationTravelTime').value) || 0;
+            const excavationRate = parseFloat(document.getElementById('excavationRate').value) || 0;
 
-            // Surface calculations - UPDATED FACTOR 0.08271
-            const surfaceTons = surfaceArea && surfaceDepth ? roundUp(surfaceArea * surfaceDepth * 0.08271, 1) : 0;
-            const surfaceDays = surfaceArea && surfaceRate ? Math.ceil(surfaceArea / surfaceRate * 2) / 2 : 0;
-            const surfaceDailyTons = surfaceDays > 0 ? surfaceTons / surfaceDays : 0;
-            const surfaceLoadsPerDay = surfaceDailyTons / 22;
-            const surfaceTrucks = surfaceLoadsPerDay && surfaceTravelTime ? Math.ceil((surfaceLoadsPerDay * surfaceTravelTime) / 480) : 0;
-            const surfaceTruckHours = surfaceTrucks * surfaceDays * 8;
-
-            console.log('Surface Tons:', surfaceTons);
-
-            // Get Base inputs
-            const baseArea = parseFloat(document.getElementById('baseArea').value) || 0;
-            const baseDepth = parseFloat(document.getElementById('baseDepth').value) || 0;
-            const baseTravelTime = parseFloat(document.getElementById('baseTravelTime').value) || 0;
-            const baseRate = parseFloat(document.getElementById('baseRate').value) || 0;
-
-            // Base calculations
-            const baseTons = baseArea && baseDepth ? roundUp(baseArea * baseDepth * 0.0575, 1) : 0;
-            const baseDays = baseArea && baseRate ? Math.ceil(baseArea / baseRate * 2) / 2 : 0;
-            const baseDailyTons = baseDays > 0 ? baseTons / baseDays : 0;
-            const baseLoadsPerDay = baseDailyTons / 22;
-            const baseTrucks = baseLoadsPerDay && baseTravelTime ? Math.ceil((baseLoadsPerDay * baseTravelTime) / 480) : 0;
-            const baseTruckHours = baseTrucks * baseDays * 8;
-
-            // Get other inputs
-            const millingArea = parseFloat(document.getElementById('millingArea').value) || 0;
-            const millingDepth = parseFloat(document.getElementById('millingDepth').value) || 0;
-            const millingTravelTime = parseFloat(document.getElementById('millingTravelTime').value) || 0;
-            const millingRate = parseFloat(document.getElementById('millingRate').value) || 0;
+            const fineGradingArea = parseFloat(document.getElementById('fineGradingArea').value) || 0;
+            const fineGradingRate = parseFloat(document.getElementById('fineGradingRate').value) || 0;
 
             const dgaArea = parseFloat(document.getElementById('dgaArea').value) || 0;
             const dgaDepth = parseFloat(document.getElementById('dgaDepth').value) || 0;
             const dgaTravelTime = parseFloat(document.getElementById('dgaTravelTime').value) || 0;
             const dgaRate = parseFloat(document.getElementById('dgaRate').value) || 0;
 
-            const fineGradingArea = parseFloat(document.getElementById('fineGradingArea').value) || 0;
-            const fineGradingRate = parseFloat(document.getElementById('fineGradingRate').value) || 0;
+            const millingArea = parseFloat(document.getElementById('millingArea').value) || 0;
+            const millingDepth = parseFloat(document.getElementById('millingDepth').value) || 0;
+            const millingTravelTime = parseFloat(document.getElementById('millingTravelTime').value) || 0;
+            const millingRate = parseFloat(document.getElementById('millingRate').value) || 0;
 
-            const excavationArea = parseFloat(document.getElementById('excavationArea').value) || 0;
-            const excavationDepth = parseFloat(document.getElementById('excavationDepth').value) || 0;
-            const excavationTravelTime = parseFloat(document.getElementById('excavationTravelTime').value) || 0;
-            const excavationRate = parseFloat(document.getElementById('excavationRate').value) || 0;
+            const baseArea = parseFloat(document.getElementById('baseArea').value) || 0;
+            const baseDepth = parseFloat(document.getElementById('baseDepth').value) || 0;
+            const baseTravelTime = parseFloat(document.getElementById('baseTravelTime').value) || 0;
+            const baseRate = parseFloat(document.getElementById('baseRate').value) || 0;
 
-            // Other calculations
-            const millingTons = millingArea && millingDepth ? roundUp(millingArea * millingDepth * 0.0494, 1) : 0;
-            const millingDays = millingArea && millingRate ? Math.ceil(millingArea / millingRate * 2) / 2 : 0;
-            const millingDailyTons = millingDays > 0 ? millingTons / millingDays : 0;
-            const millingLoadsPerDay = millingDailyTons / 22;
-            const millingTrucks = millingLoadsPerDay && millingTravelTime ? Math.ceil((millingLoadsPerDay * millingTravelTime) / 480) : 0;
-            const millingTruckHours = millingTrucks * millingDays * 8;
+            const surfaceArea = parseFloat(document.getElementById('surfaceArea').value) || 0;
+            const surfaceDepth = parseFloat(document.getElementById('surfaceDepth').value) || 0;
+            const surfaceTravelTime = parseFloat(document.getElementById('surfaceTravelTime').value) || 0;
+            const surfaceRate = parseFloat(document.getElementById('surfaceRate').value) || 0;
 
-            const dgaVolume = dgaArea && dgaDepth ? roundUp(dgaArea * dgaDepth / 324, 1) : 0;
-            const dgaTons = dgaVolume > 0 ? roundUp(dgaVolume * 1.9, 1) : 0;
-            const dgaDays = dgaVolume && dgaRate ? Math.ceil(dgaVolume / dgaRate * 2) / 2 : 0;
-            const dgaDailyVolume = dgaDays > 0 ? dgaVolume / dgaDays : 0;
-            const dgaLoadsPerDay = dgaDailyVolume / 16;
-            const dgaTrucks = dgaLoadsPerDay && dgaTravelTime ? Math.ceil((dgaLoadsPerDay * dgaTravelTime) / 480) : 0;
-            const dgaTruckHours = dgaTrucks * dgaDays * 8;
-
-            const fineGradingDays = fineGradingArea && fineGradingRate ? Math.ceil(fineGradingArea / fineGradingRate * 2) / 2 : 0;
-
+            // Excavation calculations
             const excavationVolume = excavationArea && excavationDepth ? roundUp(excavationArea * excavationDepth / 324, 1) : 0;
             const excavationTons = excavationVolume > 0 ? roundUp(excavationVolume * 1.5, 1) : 0;
             const excavationDays = excavationVolume && excavationRate ? Math.ceil(excavationVolume / excavationRate * 2) / 2 : 0;
             const excavationDailyVolume = excavationDays > 0 ? excavationVolume / excavationDays : 0;
-            const excavationLoadsPerDay = excavationDailyVolume / 16;
+            const excavationLoadsPerDay = excavationDailyVolume / 16; // 16 CY per truck
             const excavationTrucks = excavationLoadsPerDay && excavationTravelTime ? Math.ceil((excavationLoadsPerDay * excavationTravelTime) / 480) : 0;
             const excavationTruckHours = excavationTrucks * excavationDays * 8;
 
-            // Update all outputs
-            document.getElementById('surfaceTons').textContent = surfaceTons;
-            document.getElementById('surfaceDays').textContent = surfaceDays;
-            document.getElementById('surfaceTruckHours').textContent = surfaceTruckHours;
-            document.getElementById('surfaceTrucks').textContent = surfaceTrucks;
+            // Fine Grading calculations
+            const fineGradingDays = fineGradingArea && fineGradingRate ? Math.ceil(fineGradingArea / fineGradingRate * 2) / 2 : 0;
 
-            document.getElementById('baseTons').textContent = baseTons;
-            document.getElementById('baseDays').textContent = baseDays;
-            document.getElementById('baseTruckHours').textContent = baseTruckHours;
-            document.getElementById('baseTrucks').textContent = baseTrucks;
+            // DGA calculations
+            const dgaVolume = dgaArea && dgaDepth ? roundUp(dgaArea * dgaDepth / 324, 1) : 0;
+            const dgaTons = dgaVolume > 0 ? roundUp(dgaVolume * 1.9, 1) : 0;
+            const dgaDays = dgaVolume && dgaRate ? Math.ceil(dgaVolume / dgaRate * 2) / 2 : 0;
+            const dgaDailyVolume = dgaDays > 0 ? dgaVolume / dgaDays : 0;
+            const dgaLoadsPerDay = dgaDailyVolume / 16; // 16 CY per truck
+            const dgaTrucks = dgaLoadsPerDay && dgaTravelTime ? Math.ceil((dgaLoadsPerDay * dgaTravelTime) / 480) : 0;
+            const dgaTruckHours = dgaTrucks * dgaDays * 8;
 
-            document.getElementById('millingTons').textContent = millingTons;
-            document.getElementById('millingDays').textContent = millingDays;
-            document.getElementById('millingTruckHours').textContent = millingTruckHours;
-            document.getElementById('millingTrucks').textContent = millingTrucks;
+            // Milling calculations
+            const millingTons = millingArea && millingDepth ? roundUp(millingArea * millingDepth * 0.0494, 1) : 0;
+            const millingDays = millingArea && millingRate ? Math.ceil(millingArea / millingRate * 2) / 2 : 0;
+            const millingDailyTons = millingDays > 0 ? millingTons / millingDays : 0;
+            const millingLoadsPerDay = millingDailyTons / 22; // 22 tons per truck
+            const millingTrucks = millingLoadsPerDay && millingTravelTime ? Math.ceil((millingLoadsPerDay * millingTravelTime) / 480) : 0;
+            const millingTruckHours = millingTrucks * millingDays * 8;
+
+            // Base calculations
+            const baseTons = baseArea && baseDepth ? roundUp(baseArea * baseDepth * 0.0575, 1) : 0;
+            const baseDays = baseArea && baseRate ? Math.ceil(baseArea / baseRate * 2) / 2 : 0;
+            const baseDailyTons = baseDays > 0 ? baseTons / baseDays : 0;
+            const baseLoadsPerDay = baseDailyTons / 22; // 22 tons per truck
+            const baseTrucks = baseLoadsPerDay && baseTravelTime ? Math.ceil((baseLoadsPerDay * baseTravelTime) / 480) : 0;
+            const baseTruckHours = baseTrucks * baseDays * 8;
+
+            // Surface calculations
+            const surfaceTons = surfaceArea && surfaceDepth ? roundUp(surfaceArea * surfaceDepth * 0.0575, 1) : 0;
+            const surfaceDays = surfaceArea && surfaceRate ? Math.ceil(surfaceArea / surfaceRate * 2) / 2 : 0;
+            const surfaceDailyTons = surfaceDays > 0 ? surfaceTons / surfaceDays : 0;
+            const surfaceLoadsPerDay = surfaceDailyTons / 22; // 22 tons per truck
+            const surfaceTrucks = surfaceLoadsPerDay && surfaceTravelTime ? Math.ceil((surfaceLoadsPerDay * surfaceTravelTime) / 480) : 0;
+            const surfaceTruckHours = surfaceTrucks * surfaceDays * 8;
+
+            // Update output displays
+            document.getElementById('excavationVolume').textContent = excavationVolume;
+            document.getElementById('excavationTons').textContent = excavationTons;
+            document.getElementById('excavationDays').textContent = excavationDays;
+            document.getElementById('excavationTruckHours').textContent = excavationTruckHours;
+            document.getElementById('excavationTrucks').textContent = excavationTrucks;
+
+            document.getElementById('fineGradingDays').textContent = fineGradingDays;
 
             document.getElementById('dgaVolume').textContent = dgaVolume;
             document.getElementById('dgaTons').textContent = dgaTons;
@@ -481,25 +678,33 @@
             document.getElementById('dgaTruckHours').textContent = dgaTruckHours;
             document.getElementById('dgaTrucks').textContent = dgaTrucks;
 
-            document.getElementById('fineGradingDays').textContent = fineGradingDays;
+            document.getElementById('millingTons').textContent = millingTons;
+            document.getElementById('millingDays').textContent = millingDays;
+            document.getElementById('millingTruckHours').textContent = millingTruckHours;
+            document.getElementById('millingTrucks').textContent = millingTrucks;
 
-            document.getElementById('excavationVolume').textContent = excavationVolume;
-            document.getElementById('excavationTons').textContent = excavationTons;
-            document.getElementById('excavationDays').textContent = excavationDays;
-            document.getElementById('excavationTruckHours').textContent = excavationTruckHours;
-            document.getElementById('excavationTrucks').textContent = excavationTrucks;
+            document.getElementById('baseTons').textContent = baseTons;
+            document.getElementById('baseDays').textContent = baseDays;
+            document.getElementById('baseTruckHours').textContent = baseTruckHours;
+            document.getElementById('baseTrucks').textContent = baseTrucks;
 
-            console.log('All calculations completed successfully!');
+            document.getElementById('surfaceTons').textContent = surfaceTons;
+            document.getElementById('surfaceDays').textContent = surfaceDays;
+            document.getElementById('surfaceTruckHours').textContent = surfaceTruckHours;
+            document.getElementById('surfaceTrucks').textContent = surfaceTrucks;
         }
 
         function resetForm() {
+            // Reset all input fields
             const inputs = document.querySelectorAll('input[type="number"]');
             inputs.forEach(input => input.value = '');
             
+            // Reset all select dropdowns
             const selects = document.querySelectorAll('select');
             selects.forEach(select => select.selectedIndex = 0);
             
-            const outputs = document.querySelectorAll('span[id$="Tons"], span[id$="Days"], span[id$="Hours"], span[id$="Trucks"], span[id$="Volume"]');
+            // Reset all output displays
+            const outputs = document.querySelectorAll('#excavationVolume, #excavationTons, #excavationDays, #excavationTruckHours, #excavationTrucks, #fineGradingDays, #dgaVolume, #dgaTons, #dgaDays, #dgaTruckHours, #dgaTrucks, #millingTons, #millingDays, #millingTruckHours, #millingTrucks, #baseTons, #baseDays, #baseTruckHours, #baseTrucks, #surfaceTons, #surfaceDays, #surfaceTruckHours, #surfaceTrucks');
             outputs.forEach(output => output.textContent = '0');
         }
     </script>
