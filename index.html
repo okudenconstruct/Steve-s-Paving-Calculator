@@ -189,9 +189,19 @@
 </head>
 <body>
     <div class="container">
-        <div class="button-group">
-            <button class="btn btn-primary" onclick="calculateOutput()">Calculate</button>
-            <button class="btn btn-danger" onclick="resetForm()">Reset Form</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div class="button-group" style="margin-bottom: 0;">
+                <button class="btn btn-primary" onclick="calculateOutput()">Calculate</button>
+                <button class="btn btn-danger" onclick="resetForm()">Reset Form</button>
+            </div>
+            
+            <!-- Small converter utility -->
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background-color: #1f2937; padding: 0.5rem 1rem; border-radius: 0.25rem; border: 1px solid #374151; font-size: 0.875rem;">
+                <span style="color: #9ca3af;">SF:</span>
+                <input type="number" id="sfInput" placeholder="0" style="width: 80px; padding: 0.25rem 0.5rem; font-size: 0.875rem; background-color: white; color: black; border: 1px solid #d1d5db; border-radius: 0.25rem;" oninput="convertSfToSy()">
+                <span style="color: #9ca3af;">→</span>
+                <span style="color: #60a5fa; font-weight: 500;"><span id="syOutput">0</span> SY</span>
+            </div>
         </div>
 
         <div class="title">Steve's Paving Calculator</div>
@@ -584,6 +594,12 @@
     </div>
 
     <script>
+        function convertSfToSy() {
+            const sf = parseFloat(document.getElementById('sfInput').value) || 0;
+            const sy = sf / 9; // 9 square feet = 1 square yard
+            document.getElementById('syOutput').textContent = sy > 0 ? sy.toFixed(1) : '0';
+        }
+
         function roundUp(val, increment) {
             return Math.ceil(val / increment) * increment;
         }
@@ -623,90 +639,4 @@
             const excavationTons = excavationVolume > 0 ? roundUp(excavationVolume * 1.5, 1) : 0;
             const excavationDays = excavationVolume && excavationRate ? Math.ceil(excavationVolume / excavationRate * 2) / 2 : 0;
             const excavationDailyVolume = excavationDays > 0 ? excavationVolume / excavationDays : 0;
-            const excavationLoadsPerDay = excavationDailyVolume / 16; // 16 CY per truck
-            const excavationTrucks = excavationLoadsPerDay && excavationTravelTime ? Math.ceil((excavationLoadsPerDay * excavationTravelTime) / 480) : 0;
-            const excavationTruckHours = excavationTrucks * excavationDays * 8;
-
-            // Fine Grading calculations
-            const fineGradingDays = fineGradingArea && fineGradingRate ? Math.ceil(fineGradingArea / fineGradingRate * 2) / 2 : 0;
-
-            // DGA calculations
-            const dgaVolume = dgaArea && dgaDepth ? roundUp(dgaArea * dgaDepth / 324, 1) : 0;
-            const dgaTons = dgaVolume > 0 ? roundUp(dgaVolume * 1.9, 1) : 0;
-            const dgaDays = dgaVolume && dgaRate ? Math.ceil(dgaVolume / dgaRate * 2) / 2 : 0;
-            const dgaDailyVolume = dgaDays > 0 ? dgaVolume / dgaDays : 0;
-            const dgaLoadsPerDay = dgaDailyVolume / 16; // 16 CY per truck
-            const dgaTrucks = dgaLoadsPerDay && dgaTravelTime ? Math.ceil((dgaLoadsPerDay * dgaTravelTime) / 480) : 0;
-            const dgaTruckHours = dgaTrucks * dgaDays * 8;
-
-            // Milling calculations
-            const millingTons = millingArea && millingDepth ? roundUp(millingArea * millingDepth * 0.0494, 1) : 0;
-            const millingDays = millingArea && millingRate ? Math.ceil(millingArea / millingRate * 2) / 2 : 0;
-            const millingDailyTons = millingDays > 0 ? millingTons / millingDays : 0;
-            const millingLoadsPerDay = millingDailyTons / 22; // 22 tons per truck
-            const millingTrucks = millingLoadsPerDay && millingTravelTime ? Math.ceil((millingLoadsPerDay * millingTravelTime) / 480) : 0;
-            const millingTruckHours = millingTrucks * millingDays * 8;
-
-            // Base calculations
-            const baseTons = baseArea && baseDepth ? roundUp(baseArea * baseDepth * 0.0575, 1) : 0;
-            const baseDays = baseArea && baseRate ? Math.ceil(baseArea / baseRate * 2) / 2 : 0;
-            const baseDailyTons = baseDays > 0 ? baseTons / baseDays : 0;
-            const baseLoadsPerDay = baseDailyTons / 22; // 22 tons per truck
-            const baseTrucks = baseLoadsPerDay && baseTravelTime ? Math.ceil((baseLoadsPerDay * baseTravelTime) / 480) : 0;
-            const baseTruckHours = baseTrucks * baseDays * 8;
-
-            // Surface calculations
-            const surfaceTons = surfaceArea && surfaceDepth ? roundUp(surfaceArea * surfaceDepth * 0.0575, 1) : 0;
-            const surfaceDays = surfaceArea && surfaceRate ? Math.ceil(surfaceArea / surfaceRate * 2) / 2 : 0;
-            const surfaceDailyTons = surfaceDays > 0 ? surfaceTons / surfaceDays : 0;
-            const surfaceLoadsPerDay = surfaceDailyTons / 22; // 22 tons per truck
-            const surfaceTrucks = surfaceLoadsPerDay && surfaceTravelTime ? Math.ceil((surfaceLoadsPerDay * surfaceTravelTime) / 480) : 0;
-            const surfaceTruckHours = surfaceTrucks * surfaceDays * 8;
-
-            // Update output displays
-            document.getElementById('excavationVolume').textContent = excavationVolume;
-            document.getElementById('excavationTons').textContent = excavationTons;
-            document.getElementById('excavationDays').textContent = excavationDays;
-            document.getElementById('excavationTruckHours').textContent = excavationTruckHours;
-            document.getElementById('excavationTrucks').textContent = excavationTrucks;
-
-            document.getElementById('fineGradingDays').textContent = fineGradingDays;
-
-            document.getElementById('dgaVolume').textContent = dgaVolume;
-            document.getElementById('dgaTons').textContent = dgaTons;
-            document.getElementById('dgaDays').textContent = dgaDays;
-            document.getElementById('dgaTruckHours').textContent = dgaTruckHours;
-            document.getElementById('dgaTrucks').textContent = dgaTrucks;
-
-            document.getElementById('millingTons').textContent = millingTons;
-            document.getElementById('millingDays').textContent = millingDays;
-            document.getElementById('millingTruckHours').textContent = millingTruckHours;
-            document.getElementById('millingTrucks').textContent = millingTrucks;
-
-            document.getElementById('baseTons').textContent = baseTons;
-            document.getElementById('baseDays').textContent = baseDays;
-            document.getElementById('baseTruckHours').textContent = baseTruckHours;
-            document.getElementById('baseTrucks').textContent = baseTrucks;
-
-            document.getElementById('surfaceTons').textContent = surfaceTons;
-            document.getElementById('surfaceDays').textContent = surfaceDays;
-            document.getElementById('surfaceTruckHours').textContent = surfaceTruckHours;
-            document.getElementById('surfaceTrucks').textContent = surfaceTrucks;
-        }
-
-        function resetForm() {
-            // Reset all input fields
-            const inputs = document.querySelectorAll('input[type="number"]');
-            inputs.forEach(input => input.value = '');
-            
-            // Reset all select dropdowns
-            const selects = document.querySelectorAll('select');
-            selects.forEach(select => select.selectedIndex = 0);
-            
-            // Reset all output displays
-            const outputs = document.querySelectorAll('#excavationVolume, #excavationTons, #excavationDays, #excavationTruckHours, #excavationTrucks, #fineGradingDays, #dgaVolume, #dgaTons, #dgaDays, #dgaTruckHours, #dgaTrucks, #millingTons, #millingDays, #millingTruckHours, #millingTrucks, #baseTons, #baseDays, #baseTruckHours, #baseTrucks, #surfaceTons, #surfaceDays, #surfaceTruckHours, #surfaceTrucks');
-            outputs.forEach(output => output.textContent = '0');
-        }
-    </script>
-</body>
-</html>
+            const excavationLoadsPerDay = excavationDailyVolume / 16; // 16
